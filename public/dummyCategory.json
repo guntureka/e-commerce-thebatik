@@ -1,0 +1,59 @@
+{
+    "category": [
+        {
+            "id": 1,
+            "name": "Hand Stamped",
+            "description": "Hand Stamped Batik",
+            "images": "https://picsum.photos/300/200"
+            
+        },
+        {
+            "id": 2,
+            "name": "Hand Painted",
+            "description": "Hand Painted Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 3,
+            "name": "Silk",
+            "description": "Silk Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 4,
+            "name": "Javanese",
+            "description": "Javanese Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 5,
+            "name": "Abstract",
+            "description": "Abstract Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 6,
+            "name": "Uniform Clothes",
+            "description": "Uniform Clothes Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 7,
+            "name": "Scarf Shawl",
+            "description": "Scarf Shawl Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 8,
+            "name": "Bag",
+            "description": "Bag Batik",
+            "images": "https://picsum.photos/300/200"
+        },
+        {
+            "id": 9,
+            "name": "Fabric",
+            "description": "Fabric Batik",
+            "images": "https://picsum.photos/300/200"
+        }
+    ]
+}
