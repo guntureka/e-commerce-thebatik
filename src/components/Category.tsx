@@ -95,11 +95,6 @@ export default function Category() {
                 <Card className="border-none shadow-none">
                   <CardContent>
                     <div className="flex flex-col items-center">
-                      <img
-                        src={`https://picsum.photos/200/200?random=${category.id}`}
-                        alt="category"
-                        className="w-32 h-32"
-                      />
                       <div className="text-center">
                         <h3 className="text-lg font-semibold">{category.name}</h3>
                         <p className="text-gray-500">{category.description}</p>
