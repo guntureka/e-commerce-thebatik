@@ -50,7 +50,6 @@ export function Login() {
               >
                 Forget Password?
               </a>
-                    
             </div>
           </CardFooter>
         </Card>
