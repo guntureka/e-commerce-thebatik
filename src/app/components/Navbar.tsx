@@ -49,7 +49,7 @@ export default function Navbar() {
                   <a>Home</a>
                 </li>
                 <li>
-                  <a>About</a>
+                  <Link href={"./about"}>About</Link>
                 </li>
                 <li>
                   <a>Contact</a>
@@ -67,7 +67,7 @@ export default function Navbar() {
                 <a>Home</a>
               </li>
               <li>
-                <a>About</a>
+                <Link href={"./about"}>About</Link>
               </li>
               <li>
                 <a>Contact</a>
