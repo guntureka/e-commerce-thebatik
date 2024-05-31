@@ -46,13 +46,13 @@ export default function Navbar() {
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <a>Home</a>
+                  <Link href={"./"}>Home</Link>
                 </li>
                 <li>
                   <Link href={"./about"}>About</Link>
                 </li>
                 <li>
-                  <a>Contact</a>
+                  <Link href={"./contact"}>Contact</Link>
                 </li>
                 <li>
                   <Link href={"./register"}>Sign Up</Link>
@@ -64,13 +64,13 @@ export default function Navbar() {
           <div className="navbar-center hidden lg:flex ">
             <ul className="menu menu-horizontal px-1 text-[16px]">
               <li>
-                <a>Home</a>
+                <Link href={"./"}>Home</Link>
               </li>
               <li>
                 <Link href={"./about"}>About</Link>
               </li>
               <li>
-                <a>Contact</a>
+                <Link href={"./contact"}>Contact</Link>
               </li>
               <li>
                 <Link href={"./register"}>Sign Up</Link>
