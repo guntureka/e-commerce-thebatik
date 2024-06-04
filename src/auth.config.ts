@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { getUserByEmail } from "@/actions/user";
-import { db } from "./db";
+import { db } from "./utils/db";
 import { ZodError } from "zod";
 
 export default {
