@@ -91,7 +91,7 @@ export function ContactForm() {
               <input
                 type="submit"
                 value="Send a Message"
-                className="btn w-[143px] h-[46px] mb-2 bg-[#DB4444] border-none rounded-[4px] text-[#FAFAFA] text-[16px] "
+                className="btn w-[143px] h-[46px] mb-2 bg-[#DB4444] border-none rounded-[4px] text-[#FAFAFA] text-[16px]"
               />
             </CardFooter>
           </Card>

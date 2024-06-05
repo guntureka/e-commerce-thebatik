@@ -34,7 +34,7 @@ export function Executive() {
                 </CardDescription>
               </CardHeader>
               <CardFooter className="flex flex-row gap-2">
-                <button type="button" className="">
+                <a href="./404error"><button type="button" className="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
@@ -58,7 +58,7 @@ export function Executive() {
                       d="M15.724,9l20.578,30h-4.106L11.618,9H15.724 M17.304,6H5.922l24.694,36h11.382L17.304,6L17.304,6z"
                     ></path>
                   </svg>
-                </button>
+                </button></a>
                 <button type="button" className="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
