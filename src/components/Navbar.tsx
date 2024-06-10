@@ -19,7 +19,7 @@ export default function Navbar() {
               </div>
             </div>
             <div className="font-poppins font-normal text-[16px] leading-[24px] text-black">
-            <a href="/Contact">Come</a>
+            <a href="/Contact">Contact</a>
             </div>
             <div className="font-poppins font-normal text-[16px] leading-[24px] text-black">
             <a href="/About">About</a>
