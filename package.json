@@ -30,7 +30,7 @@
     "react-dom": "^18",
     "zod": "^3.23.8",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
     "react-icons-kit": "^2.0.0",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
