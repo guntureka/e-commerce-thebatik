@@ -9,6 +9,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/sign-in",
+  },
   events: {
     async linkAccount({ user }) {
       await updateUserLinkedAccount(user);

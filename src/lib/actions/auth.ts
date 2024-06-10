@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { db } from "@/utils/db";
 import { User } from "next-auth";
@@ -54,6 +54,9 @@ export const signupAuth = async (values: z.infer<typeof signupSchema>) => {
     };
   } catch (error) {
     console.log(error);
+    return {
+      error: "Something went wrong!",
+    };
   }
 };
 
@@ -92,6 +95,7 @@ export const signinAuth = async (values: z.infer<typeof signinSchema>) => {
     await signIn("credentials", {
       email,
       password,
+      redirect: false,
     });
 
     return {
@@ -99,5 +103,8 @@ export const signinAuth = async (values: z.infer<typeof signinSchema>) => {
     };
   } catch (error) {
     console.log(error);
+    return {
+      error: "Something went wrong!",
+    };
   }
 };
