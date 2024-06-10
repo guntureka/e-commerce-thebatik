@@ -13,8 +13,8 @@ export default function Footer() {
             type="email"
             name="email"
             id="email"
-            placeholder="Enter your email"
-            className="text-white bg-black"
+            placeholder="  Enter your email"
+            className="text-white bg-black border-white border-2 rounded-md"
           />
         </Card>
         <Card className="bg-black text-white border-none shadow-none mx-auto leading-10">
