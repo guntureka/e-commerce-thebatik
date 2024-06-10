@@ -12,7 +12,7 @@ import {
 
 export function Login() {
   return (
-    <div className="flex flex-row ">
+    <div className="flex  flex-row ">
       <div>
         <Image src="/logreg.png" width={919} height={0} alt={"logreg"} />
       </div>
