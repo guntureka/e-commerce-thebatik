@@ -1,8 +1,14 @@
 import { getAllCategories } from "@/lib/actions/category";
 import { getAllUser } from "@/lib/actions/user";
-import { categorySchema } from "@/lib/schemas";
+import { categorySchema, productSchema } from "@/lib/schemas";
 import { db } from "@/utils/db";
 import { NextRequest } from "next/server";
+
+async function parseFormData(formData: FormData) {
+  const entries = await formData.entries();
+  const data = Object.fromEntries(entries);
+  return data;
+}
 
 export const GET = async () => {
   const data = await getAllCategories();
@@ -12,8 +18,13 @@ export const GET = async () => {
 };
 
 export const POST = async (req: NextRequest) => {
-  const data = await req.json();
-  const validatedFields = categorySchema.safeParse(data);
+  const formData = await req.formData();
+  const entries = formData.entries();
+  const parsedData = Object.fromEntries(entries);
+
+  return Response.json(parsedData)
+
+  const validatedFields = productSchema.safeParse(parsedData);
 
   if (!validatedFields.success) {
     return Response.json({
@@ -23,22 +34,26 @@ export const POST = async (req: NextRequest) => {
 
   const res = validatedFields.data;
 
-  try {
-    await db.category.create({
-      data: {
-        name: res.name,
-        description: res.description,
-      },
-    });
+  return Response.json({
+    res,
+  });
 
-    return Response.json({
-      success: "Category created successfully",
-    });
-  } catch (error) {
-    return Response.json({
-      error: "Something went wrong",
-    });
-  }
+  // try {
+  //   await db.category.create({
+  //     data: {
+  //       name: res.name,
+  //       description: res.description,
+  //     },
+  //   });
+
+  //   return Response.json({
+  //     success: "Category created successfully",
+  //   });
+  // } catch (error) {
+  //   return Response.json({
+  //     error: "Something went wrong",
+  //   });
+  // }
 };
 
 export const PUT = async (req: NextRequest) => {

@@ -131,6 +131,7 @@ model Product {
   colors        String[]
   wishlistItems Wishlist_Item[]
   CartItems     Cart_Item[]
+  images        String[]
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
