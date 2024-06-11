@@ -24,9 +24,10 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface NavbarProps {
   session: Session | null;
@@ -99,6 +100,7 @@ export default function Navbar({ session }: NavbarProps) {
               alt="filled-like"
               width={24}
               height={24}
+              priority
             />
           </Button>
           <Button
@@ -125,7 +127,7 @@ export default function Navbar({ session }: NavbarProps) {
             </svg>
           </Button>
           <div className="flex items-center">
-            {session && session.user ? (
+            {session?.user ? (
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant={null} className="p-0 flex items-center">
@@ -147,8 +149,40 @@ export default function Navbar({ session }: NavbarProps) {
                   </Button>
                 </SheetTrigger>
                 <SheetContent className={`py-10`}>
-                  <SheetClose asChild>
-                    <div className="flex flex-col">
+                  <div className="flex flex-col space-y-3">
+                    <div className="flex flex-col space-y-3 md:hidden">
+                      <SheetClose asChild>
+                        <Link href={"/"} className="text-start">
+                          <Button
+                            variant={"ghost"}
+                            className="w-full flex justify-start"
+                          >
+                            Home
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link href={"/contact-us"} className="text-start">
+                          <Button
+                            variant={"ghost"}
+                            className="w-full flex justify-start"
+                          >
+                            Contact Us
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link href={"/about-us"} className="text-start">
+                          <Button
+                            variant={"ghost"}
+                            className="w-full flex justify-start"
+                          >
+                            About Us
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                    </div>
+                    <SheetClose asChild>
                       <Button
                         variant={"destructive"}
                         className="w-full"
@@ -156,12 +190,12 @@ export default function Navbar({ session }: NavbarProps) {
                       >
                         Logout
                       </Button>
-                    </div>
-                  </SheetClose>
+                    </SheetClose>
+                  </div>
                 </SheetContent>
               </Sheet>
             ) : (
-              <>
+              <div className="flex items-center">
                 <div className="hidden md:flex gap-3">
                   <Link href={"/sign-up"}>
                     <Button variant={"outline"}>Sign up</Button>
@@ -170,8 +204,77 @@ export default function Navbar({ session }: NavbarProps) {
                     <Button>Sign in</Button>
                   </Link>
                 </div>
-                <div></div>
-              </>
+                <div className="md:hidden flex items-center">
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <Button variant={null} className="p-0 flex items-center">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent className={`py-10`}>
+                      <div className="flex flex-col space-y-3">
+                        <div className="flex flex-col space-y-3 md:hidden">
+                          <SheetClose asChild>
+                            <Link href={"/"} className="text-start">
+                              <Button
+                                variant={"ghost"}
+                                className="w-full flex justify-start"
+                              >
+                                Home
+                              </Button>
+                            </Link>
+                          </SheetClose>
+                          <SheetClose asChild>
+                            <Link href={"/contact-us"} className="text-start">
+                              <Button
+                                variant={"ghost"}
+                                className="w-full flex justify-start"
+                              >
+                                Contact Us
+                              </Button>
+                            </Link>
+                          </SheetClose>
+                          <SheetClose asChild>
+                            <Link href={"/about-us"} className="text-start">
+                              <Button
+                                variant={"ghost"}
+                                className="w-full flex justify-start"
+                              >
+                                About Us
+                              </Button>
+                            </Link>
+                          </SheetClose>
+                        </div>
+                        <SheetClose asChild>
+                          <Link href={"/sign-up"} className="w-full">
+                            <Button variant={"outline"} className="w-full">
+                              Sign up
+                            </Button>
+                          </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Link href={"/sign-in"} className="w-full">
+                            <Button variant={"default"} className="w-full">
+                              Sign in
+                            </Button>
+                          </Link>
+                        </SheetClose>
+                      </div>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+              </div>
             )}
           </div>
         </div>
