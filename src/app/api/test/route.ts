@@ -1,7 +1,8 @@
 import { getAllUser } from "@/lib/actions/user";
 
 export const GET = async () => {
-  const user = await getAllUser();
+  const data = await getAllUser();
 
-  return Response.json(user);
+  console.log('data;', data)
+  return Response.json(data);
 };
