@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import FlashSale from "@/components/FlashSale";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
