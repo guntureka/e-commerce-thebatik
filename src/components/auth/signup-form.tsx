@@ -51,7 +51,7 @@ const SignupForm = () => {
             toast({
               title: "Success!",
               description: data.success,
-              variant: "default",
+              variant: "success",
             });
           } else {
             toast({

@@ -35,7 +35,6 @@ interface NavbarProps {
 
 export default function Navbar({ session }: NavbarProps) {
   const pathname = usePathname();
-  console.log(pathname);
 
   const handleCart = async () => {
     console.log("cart");
@@ -47,7 +46,15 @@ export default function Navbar({ session }: NavbarProps) {
   return (
     <header className="sticky top-0 bg-white">
       <div className="flex justify-between items-center lg:px-24 px-10 py-5">
-        <Image src="/logo-header.png" width={132} height={32} alt={"logo"} />
+        <Link href={"/"}>
+          <Image
+            src="/logo-header.png"
+            width={132}
+            height={32}
+            alt={"logo"}
+            priority
+          />
+        </Link>
         <div className="hidden md:flex items-center">
           <NavigationMenu>
             <NavigationMenuList className="flex gap-3 text-base items-center">
@@ -150,6 +157,16 @@ export default function Navbar({ session }: NavbarProps) {
                 </SheetTrigger>
                 <SheetContent className={`py-10`}>
                   <div className="flex flex-col space-y-3">
+                    <SheetClose asChild>
+                      <Link href={"/"}>
+                        <Image
+                          src="/logo-header.png"
+                          width={132}
+                          height={32}
+                          alt={"logo"}
+                        />
+                      </Link>
+                    </SheetClose>
                     <div className="flex flex-col space-y-3 md:hidden">
                       <SheetClose asChild>
                         <Link href={"/"} className="text-start">
@@ -224,12 +241,23 @@ export default function Navbar({ session }: NavbarProps) {
                     </SheetTrigger>
                     <SheetContent className={`py-10`}>
                       <div className="flex flex-col space-y-3">
+                        <SheetClose asChild>
+                          <Link href={"/"}>
+                            <Image
+                              src="/logo-header.png"
+                              width={132}
+                              height={32}
+                              alt={"logo"}
+                              priority
+                            />
+                          </Link>
+                        </SheetClose>
                         <div className="flex flex-col space-y-3 md:hidden">
                           <SheetClose asChild>
                             <Link href={"/"} className="text-start">
                               <Button
                                 variant={"ghost"}
-                                className="w-full flex justify-start"
+                                className="w-full flex justify-start pl-0"
                               >
                                 Home
                               </Button>

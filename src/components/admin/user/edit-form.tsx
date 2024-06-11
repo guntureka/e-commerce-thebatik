@@ -1,6 +1,6 @@
 "use client";
 
-import { signinSchema } from "@/lib/schemas";
+import { userSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -14,36 +14,45 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
-import { signinAuth } from "@/lib/actions/auth";
 import { useRouter } from "next/navigation";
+import { User, UserRole } from "@prisma/client";
+import { updateUserById } from "@/lib/actions/user";
 
-const SigninForm = () => {
+const UserEditForm = ({ user }: { user: User }) => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof signinSchema>>({
-    resolver: zodResolver(signinSchema),
+  const form = useForm<z.infer<typeof userSchema>>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      name: user.name,
+      role: user.role,
     },
   });
 
-  function onSubmit(values: z.infer<typeof signinSchema>) {
+  function onSubmit(values: z.infer<typeof userSchema>) {
     startTransition(() => {
-      signinAuth(values)
+      updateUserById(user.id, values)
         .then((data) => {
           if (data && data.success) {
             toast({
@@ -51,14 +60,12 @@ const SigninForm = () => {
               description: data.success,
               variant: "success",
             });
-            form.reset();
             router.refresh();
-            // router.push("/");
           } else {
             toast({
               title: "Error!",
               description: data.error,
-              variant: "success",
+              variant: "destructive",
             });
           }
         })
@@ -69,30 +76,32 @@ const SigninForm = () => {
             variant: "destructive",
           });
         });
+      console.log(values);
     });
   }
 
   return (
-    <Card className="w-full flex flex-col border-none outline-none shadow-none">
-      <CardHeader>
-        <CardTitle className="text-center">Sign in to The Batik</CardTitle>
-        <CardDescription className="text-center">
-          Enter your details below
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Edit</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit</DialogTitle>
+          <DialogDescription>Make changes to user.</DialogDescription>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="email"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
                       {...field}
-                      type="email"
-                      placeholder={"Email"}
+                      type="text"
+                      placeholder={"Name"}
                       className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
                     />
                   </FormControl>
@@ -102,48 +111,42 @@ const SigninForm = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="role"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder={"Password"}
-                      className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                    />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a verified email to display" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={UserRole.USER}>USER</SelectItem>
+                        <SelectItem value={UserRole.ADMIN}>ADMIN</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <Button
               type="submit"
               variant={"destructive"}
               disabled={isPending}
               className={"w-full"}
             >
-              Sign in
+              Edit
             </Button>
           </form>
         </Form>
-      </CardContent>
-      <CardFooter className="flex justify-center items-center">
-        <div className="flex">
-          <p>
-            Dont have an account?
-            <span>
-              <Link className=" hover:underline " href={"./sign-up"}>
-                {" "}
-                Sign up
-              </Link>
-            </span>
-          </p>
-        </div>
-      </CardFooter>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default SigninForm;
+export default UserEditForm;
