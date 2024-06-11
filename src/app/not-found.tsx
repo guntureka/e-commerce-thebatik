@@ -6,8 +6,8 @@ import React from "react";
 
 const NotFound = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center space-y-10 justify-center p-24">
-      <h1 className="text-7xl font-bold">404 NOT FOUND</h1>
+    <main className="flex min-h-screen flex-col items-center space-y-10 justify-center lg:p-24 p-10">
+      <h1 className="md:text-7xl text-4xl font-bold">404 NOT FOUND</h1>
       <p className="text-sm">
         Your visited page not found. You may go home page
       </p>

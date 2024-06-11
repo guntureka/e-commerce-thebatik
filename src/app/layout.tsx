@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
 import { auth } from "@/auth";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: true });
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -27,14 +30,14 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <SessionProvider>
+    <SessionProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
           <Navbar session={session} />
           {children}
           <Toaster />
-        </SessionProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
