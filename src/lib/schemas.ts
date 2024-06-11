@@ -58,3 +58,32 @@ export const categorySchema = z.object({
   }),
   description: z.string(),
 });
+
+export const productSchema = z.object({
+  categoryId: z.string(),
+  name: z.string(),
+  description: z.string(),
+  price: z.number().multipleOf(0.01),
+  discount: z.number().multipleOf(0.01).optional(),
+  quantity: z.number(),
+  sizes: z.array(z.string()),
+  colors: z.array(z.string()),
+  // images: z.array(
+  //   z.object({
+  //     url: z.string().url().optional(), // Optional URL for existing images
+  //     file: z
+  //       .union([
+  //         z.string().optional(), // Base64 encoded image data (optional)
+  //         z
+  //           .object({
+  //             fieldname: z.string(), // Field name from the form (optional)
+  //             size: z.number().lte(5242880), // Max 5MB per image (adjust as needed)
+  //             mimetype: z
+  //               .string().in(["image/jpeg", "image/png", "image/webp"]), // Accepted image mimetypes
+  //           })
+  //           .optional(), // Optional file object for uploads
+  //       ])
+  //       .optional(), // Entire 'file' field can be optional
+  //   })
+  // ),
+});

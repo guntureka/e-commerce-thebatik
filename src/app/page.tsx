@@ -21,8 +21,6 @@ export default function Home() {
       <Enhance />
       <OurProducts />
       <NewArrival />
-      
-    
     </>
   );
 }
