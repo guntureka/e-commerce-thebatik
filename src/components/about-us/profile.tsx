@@ -4,7 +4,7 @@ import Image from "next/image";
 const Profile = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-      <div className="">
+      <div className="w-full">
         <h2 className="text-[#1F204C] font-bold text-[30px]">Our Story</h2>
         <br />
         <p className="text-justify text-[#666666] text-[20px]">
@@ -24,7 +24,13 @@ const Profile = () => {
         </p>
       </div>
       <div className="w-full">
-        <Image src="/profile.png" width={705} height={609} alt={"profile"} />
+        <Image
+          src="/profile.png"
+          width={705}
+          height={609}
+          alt={"profile"}
+          className="w-full"
+        />
       </div>
     </div>
   );

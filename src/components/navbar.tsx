@@ -14,9 +14,19 @@ import {
   navigationMenuTriggerStyle,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Session } from "next-auth";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface NavbarProps {
   session: Session | null;
@@ -115,27 +125,54 @@ export default function Navbar({ session }: NavbarProps) {
             </svg>
           </Button>
           <div className="flex items-center">
-            <Button
-              variant={null}
-              className="p-0 flex items-center"
-              onClick={handleCart}
-            >
-              <svg
-                className=" text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </Button>
+            {session && session.user ? (
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant={null} className="p-0 flex items-center">
+                    <svg
+                      className="w-6 h-6 text-gray-800 dark:text-white"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className={`py-10`}>
+                  <SheetClose asChild>
+                    <div className="flex flex-col">
+                      <Button
+                        variant={"destructive"}
+                        className="w-full"
+                        onClick={() => signOut()}
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  </SheetClose>
+                </SheetContent>
+              </Sheet>
+            ) : (
+              <>
+                <div className="hidden md:flex gap-3">
+                  <Link href={"/sign-up"}>
+                    <Button variant={"outline"}>Sign up</Button>
+                  </Link>
+                  <Link href={"/sign-in"}>
+                    <Button>Sign in</Button>
+                  </Link>
+                </div>
+                <div></div>
+              </>
+            )}
           </div>
         </div>
       </div>
