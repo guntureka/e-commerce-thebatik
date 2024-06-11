@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 // import Navbar from "@/components/navbar";
 import { auth } from "@/auth";
 import dynamic from "next/dynamic";
+import BreadcrumbContext from "@/components/breadcrumb-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <Navbar session={session} />
+          {/* <BreadcrumbContext /> */}
           {children}
           <Toaster />
         </body>

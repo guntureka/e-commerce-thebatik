@@ -1,10 +1,10 @@
-import { redirect } from "next/dist/server/api-utils";
 import { auth } from "./auth";
 import {
   authRoutes,
   publicRoutes,
   apiAuthPrefix,
   adminRoutes,
+  apiTestPrefix,
 } from "./utils/routes";
 
 export default auth((req) => {
@@ -12,14 +12,16 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const user = req.auth?.user;
 
-  console.log(user);
-
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isTestRoute = nextUrl.pathname.startsWith(apiTestPrefix);
   const isAdminRoute = nextUrl.pathname.startsWith(adminRoutes);
 
   if (isApiAuthRoute) {
+    return;
+  }
+  if (isTestRoute) {
     return;
   }
 

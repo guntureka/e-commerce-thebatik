@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import { z } from "zod";
 
 export const signinSchema = z.object({
@@ -43,3 +44,17 @@ export const signupSchema = z
       path: ["password"],
     }
   );
+
+export const userSchema = z.object({
+  name: z.string().min(8, {
+    message: "Minimum 8 character required!",
+  }),
+  role: z.nativeEnum(UserRole),
+});
+
+export const categorySchema = z.object({
+  name: z.string().min(1, {
+    message: "Name required!",
+  }),
+  description: z.string(),
+});
