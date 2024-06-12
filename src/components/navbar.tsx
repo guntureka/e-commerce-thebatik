@@ -1,5 +1,4 @@
-"use client";
-
+import exp from "constants";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
@@ -94,37 +93,22 @@ export default function Navbar({ session }: NavbarProps) {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className="flex items-center md:gap-4 gap-2">
-          <Button
-            variant={null}
-            className="p-0 flex items-center"
-            onClick={handleWishlist}
-          >
-            <Image
-              src={
-                "https://img.icons8.com/material-outlined/24/filled-like.png"
-              }
-              alt="filled-like"
-              width={24}
-              height={24}
-              priority
+        <div className="flex flex-col justify-center items-center px-5 py-2 gap-10 bg-gray-200 rounded-md w-50">
+          <div className="relative w-full">
+            <input
+              type="search"
+              name="product"
+              id="product"
+              placeholder="What are you looking for?"
+              className="w-full h-full bg-transparent outline-none text-black placeholder-opacity-50 pl-10 pr-10"
             />
-          </Button>
-          <Button
-            variant={null}
-            className="p-0 flex items-center"
-            onClick={handleCart}
-          >
-            <svg
-              className=" text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
+            <button
+              type="submit"
+              className="absolute inset-y-0 right-0 flex items-center px-2"
             >
-              <path
+              <svg
+                className="w-5 h-5 text-gray-600"
+                fill="none"
                 stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -306,8 +290,17 @@ export default function Navbar({ session }: NavbarProps) {
             )}
           </div>
         </div>
+
+        <div className="flex gap-3 mx-4">
+            <a href="/wishlist">
+              <Icon icon={heartO} size={24} className="text-gray-600" />
+            </a>
+
+            <a href="/cart">
+              <Icon icon={shoppingCart} size={24} className="text-gray-600" />
+            </a>
+        </div>
       </div>
-      <hr />
-    </header>
+    </div>
   );
 }
