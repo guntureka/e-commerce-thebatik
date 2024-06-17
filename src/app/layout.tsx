@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: true });
+const Navbar = dynamic(() => import("@/components/navigational-bar"), { ssr: true });
 
 export default async function RootLayout({
   children,
