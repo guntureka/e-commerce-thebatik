@@ -22,7 +22,7 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
   const images: File | null = formData.get("images") as File;
-  const data = await uploadFile(images, "publics");
+  const { data } = await uploadFile(images, "publics");
   // Handle the file upload logic here
   return NextResponse.json({ data });
 };

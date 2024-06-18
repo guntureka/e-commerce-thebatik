@@ -17,17 +17,7 @@ export const createProduct = async (data: z.infer<typeof productSchema>) => {
 
   try {
     await db.product.create({
-      data: {
-        categoryId: res.categoryId,
-        name: res.name,
-        description: res.description,
-        price: res.price,
-        quantity: res.quantity,
-        discount: res.discount,
-        colors: res.colors,
-        sizes: res.sizes,
-        // images: res.images,
-      },
+      data: res,
     });
 
     return {
@@ -78,15 +68,33 @@ export const getAllProducts = async () => {
 };
 
 // Update a product
-export const updateProduct = async (id: string, data: any) => {
+export const updateProduct = async (
+  id: string,
+  data: z.infer<typeof productSchema>
+) => {
   try {
-    const product = await db.product.update({
+    const validatedFields = productSchema.safeParse(data);
+
+    if (!validatedFields.success) {
+      return {
+        error: "invalid fields",
+      };
+    }
+
+    const res = validatedFields.data;
+
+    await db.product.update({
       where: { id },
-      data,
+      data: res,
     });
-    return product;
+
+    return {
+      success: "Product updated successful",
+    };
   } catch (error) {
-    return null;
+    return {
+      error: "Something went wrong!",
+    };
   }
 };
 

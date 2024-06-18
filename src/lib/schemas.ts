@@ -68,22 +68,17 @@ export const productSchema = z.object({
   quantity: z.number(),
   sizes: z.array(z.string()),
   colors: z.array(z.string()),
-  // images: z.array(
-  //   z.object({
-  //     url: z.string().url().optional(), // Optional URL for existing images
-  //     file: z
-  //       .union([
-  //         z.string().optional(), // Base64 encoded image data (optional)
-  //         z
-  //           .object({
-  //             fieldname: z.string(), // Field name from the form (optional)
-  //             size: z.number().lte(5242880), // Max 5MB per image (adjust as needed)
-  //             mimetype: z
-  //               .string().in(["image/jpeg", "image/png", "image/webp"]), // Accepted image mimetypes
-  //           })
-  //           .optional(), // Optional file object for uploads
-  //       ])
-  //       .optional(), // Entire 'file' field can be optional
-  //   })
-  // ),
+  images: z.array(z.string()),
+});
+
+export const cartSchema = z.object({
+  quantity: z.number(),
+  userId: z.string(),
+  productId: z.string(),
+});
+
+export const wishlistSchema = z.object({
+  quantity: z.number(),
+  userId: z.string(),
+  productId: z.string(),
 });
