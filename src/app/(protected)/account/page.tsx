@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import Input  from "@/components/ui/input";
+import {Input}  from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";

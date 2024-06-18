@@ -2,8 +2,6 @@
 import { Card } from "@/components/ui/card";
 import * as React from "react";
 import { useState } from "react";
-import { createCartItem } from "@/lib/actions/cart-item";
-import { createCart } from "@/lib/actions/cart";
 
 export default function ProductsCard({ product }: { product: any }) {
   const [success, setSuccess] = useState<string | undefined>("");

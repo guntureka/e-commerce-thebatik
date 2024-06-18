@@ -6,7 +6,7 @@ import {Address, User} from '@prisma/client'
 import { updateUserById } from "@/lib/actions/user";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import FormField from "@/components/ui/form";
+import { FormField } from "../ui/form";
 import { updateAddress } from "@/lib/actions/address";
 const AddressForm = (address:Address) => {
     const [success, setSuccess] = useState<string | undefined>("");
@@ -55,7 +55,7 @@ const AddressForm = (address:Address) => {
       <div className="flex w-full flex-col">
         <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
-          <FormField
+          {/* <FormField
             id="name"
             label="Name"
             register={register("name")}
@@ -89,7 +89,7 @@ const AddressForm = (address:Address) => {
             register={register("postalCode")}
             error={errors.postalCode}
             placeholder="Enter your postal code"
-           />
+           /> */}
         </div>
         </form>
       </div>

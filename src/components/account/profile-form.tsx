@@ -6,7 +6,7 @@ import {Address, User} from '@prisma/client'
 import { updateUserById } from "@/lib/actions/user";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import FormField from "@/components/ui/form";
+import { FormField } from "../ui/form";
 import { updateAddress } from "@/lib/actions/address";
 const ProfileForm = (user:User) => {
     const [success, setSuccess] = useState<string | undefined>("");

@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Timer from "./Timer";
 import Link from "next/link";
+import { getAllProducts } from "@/lib/actions/product";
 export default function FlashSale() {
   const [products, setProducts] = React.useState([]);
   useEffect(() => {
