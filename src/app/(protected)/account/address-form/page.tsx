@@ -1,8 +1,10 @@
 import { signinSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState, useTransition } from "react";
-
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { getAddressById } from "@/lib/actions/address";
+import { auth } from "@/auth";
 
 
 import {
@@ -20,27 +22,26 @@ import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { signinAuth } from "@/lib/actions/auth";
 import { useRouter } from "next/navigation";
-import {User} from "@prisma/client";
-import { auth } from "@/auth";
+import AddressForm from "@/components/account/address-form";
+import { useSession } from "next-auth/react";
 import { getUserById } from "@/lib/actions/user";
-import Profile from "@/components/about-us/profile";
-import ProfileForm from "@/components/account/profile-form";
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
 
-const AccountPage  = async () => {
-  const session = await auth();
-  if (!session) {
-    return <div>loading...</div>;
-  }
-  const user = await getUserById(session.user.id!);
-  if (!user) {
-    return <div>loading...</div>;
-  }
-  
+const AddressEdit = async () => {
+    const session = await auth()
+    if (!session) {
+      return <div>loading...</div>;
+    }
+    const user = await getUserById(session.user.id!);
+    if (!user) {
+      return <div>loading user...</div>;
+    }
+    const Address = await getAddressById(user.id)
+    console.log(Address)
+    console.log(user)
+    if (!Address) {
+      return <div>loading address...</div>;
+    }
+
 
   return (
     <>
@@ -62,11 +63,11 @@ const AccountPage  = async () => {
         </div>
 
         <Card className="flex flex-col border-none outline-none shadow-none justify-center">
-          <ProfileForm {...user}/>
+       <AddressForm {...Address}/>
         </Card>
       </div>
     </>
   );
 }
 
-export default AccountPage
+export default AddressEdit;

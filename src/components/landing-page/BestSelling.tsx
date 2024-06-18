@@ -1,12 +1,13 @@
 "use client";
-import ProductsCard from "./product/ProductsCard";
+import ProductsCard from "../product/ProductsCard";
 import { stop } from "react-icons-kit/fa/stop";
 import React, { useEffect, useState } from "react";
 import Icon from "react-icons-kit";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Timer from "./Timer";
+import Timer from "@/components/landing-page/Timer";
+import Link from "next/link";
 export default function FlashSale() {
   const [products, setProducts] = React.useState([]);
   useEffect(() => {
@@ -68,30 +69,27 @@ export default function FlashSale() {
   return (
     <>
       <div className="container mt-10 mb-10 mx-auto">
-        <div className="flex flex-col items-start gap-4 w-120 h-40  ml-40 mt-40">
+        <div className="flex flex-col items-start gap-4 w-120 h-40  ml-40 mt-40 mx-auto">
           <div className="font-poppins font-semibold text-xl leading-5 text-left text-red-600">
-              <Icon icon={stop} size={24} className="text-red" /> Today’s
+            <Icon icon={stop} size={24} className="text-red" /> This Month
           </div>
           <div className="font-inter font-semibold text-3xl leading-12 tracking-wide text-left ">
-            <div className="flex gap-10">Flash Sales<Timer deadline="2025-12-31T23:59:59" /></div>
-            
+            Best Selling Products
+            <Link href="/product">
+              <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
+                View All Products
+              </button>
+            </Link>
           </div>
-     
         </div>
         <div className="mx-32">
-        <Slider {...settings}>
-          {products.map((product, index) => (
-            <div key={index} className="px-2">
-              <ProductsCard product={product} />
-            </div>
-          ))}
-        </Slider>
-        </div>
-
-        <div className="mt-24 flex justify-center">
-          <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
-            View All Products
-          </button>
+          <Slider {...settings}>
+            {products.map((product, index) => (
+              <div key={index} className="px-2">
+                <ProductsCard product={product} />
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
     </>

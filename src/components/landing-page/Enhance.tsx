@@ -1,5 +1,5 @@
 "use client";
-import Timer from "./Timer";
+import Timer from "@/components/landing-page/Timer";
 export default function Enhance() {
   return (
     <>

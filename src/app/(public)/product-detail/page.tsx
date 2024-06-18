@@ -2,7 +2,7 @@ import Profile from "@/components/about-us/profile";
 import React from "react";
 import Image from "next/image";
 
-import OurProducts from "@/components/OurProducts";
+import OurProducts from "@/components/landing-page/OurProducts";
 import { Button } from "@/components/ui/button";
 
 const ProductDetailsPage = () => {
