@@ -78,7 +78,7 @@ export default function FlashSale({ products }: FlashsaleProps) {
       <div className="container mt-10 mb-10 mx-auto">
         <div className="flex flex-col items-start gap-4 w-120 h-40  ml-40 mt-40">
           <div className="font-poppins font-semibold text-xl leading-5 text-left text-red-600">
-            <Icon icon={stop} size={24} className="text-red" /> Today’s
+            <Icon icon={stop} size={24} className="text-red" /> Today
           </div>
           <div className="font-inter font-semibold text-3xl leading-12 tracking-wide text-left ">
             <div className="flex gap-10">
@@ -89,7 +89,7 @@ export default function FlashSale({ products }: FlashsaleProps) {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {products!.map((product, index) => (
+            {products?.map((product, index) => (
               <div key={index} className="px-2">
                 <ProductsCard product={product} />
               </div>

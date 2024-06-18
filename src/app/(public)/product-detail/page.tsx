@@ -130,7 +130,6 @@ const ProductDetailsPage = () => {
         </div>
       </div>
 
-      <OurProducts />
     </main>
   );
 };

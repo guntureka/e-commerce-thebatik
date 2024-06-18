@@ -7,16 +7,23 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-export default function OurProducts() {
-  const [products, setProducts] = React.useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch("/dummyProducts.json");
-      const data = await response.json();
-      setProducts(data.products);
-    }
-    fetchData();
-  }, []);
+import { getAllProducts } from "@/lib/actions/product";
+import { Product } from "@prisma/client";
+
+interface OurProductsProps {
+  products: Product[] | null | undefined;
+}
+
+export default function OurProducts({ products }: OurProductsProps) {
+  // const [products, setProducts] = React.useState([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch("/dummyProducts.json");
+  //     const data = await response.json();
+  //     setProducts(data.products);
+  //   }
+  //   fetchData();
+  // }, []);
 
   const settings = {
     className: "center",
@@ -81,7 +88,7 @@ export default function OurProducts() {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {products.map((product, index) => (
+            {products!.map((product, index) => (
               <div key={index} className="px-2">
                 <ProductsCard product={product} />
               </div>

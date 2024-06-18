@@ -8,16 +8,23 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Timer from "@/components/landing-page/Timer";
 import Link from "next/link";
-export default function FlashSale() {
-  const [products, setProducts] = React.useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch("/dummyProducts.json");
-      const data = await response.json();
-      setProducts(data.products);
-    }
-    fetchData();
-  }, []);
+import { getAllProducts } from "@/lib/actions/product";
+import { Product } from "@prisma/client";
+
+interface BestsellingProps {
+  products: Product[] | null | undefined;
+}
+
+export default function BestSelling({ products }: BestsellingProps) {
+  // const [products, setProducts] = React.useState([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch("/dummyProducts.json");
+  //     const data = await response.json();
+  //     setProducts(data.products);
+  //   }
+  //   fetchData();
+  // }, []);
 
   const settings = {
     dots: true,
@@ -75,21 +82,24 @@ export default function FlashSale() {
           </div>
           <div className="font-inter font-semibold text-3xl leading-12 tracking-wide text-left ">
             Best Selling Products
-            <Link href="/product">
-              <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
-                View All Products
-              </button>
-            </Link>
           </div>
         </div>
-        <div className="mx-32">
+         <div className="mx-32">
           <Slider {...settings}>
-            {products.map((product, index) => (
+            {products!.map((product, index) => (
               <div key={index} className="px-2">
                 <ProductsCard product={product} />
               </div>
             ))}
           </Slider>
+        </div>
+
+        <div className="mt-24 flex justify-center">
+          <Link href="/product">
+            <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
+              View All Products
+            </button>
+          </Link>
         </div>
       </div>
     </>

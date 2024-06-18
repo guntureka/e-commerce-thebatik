@@ -19,10 +19,9 @@ export default async function Home() {
     <>
       <Banner />
       <FlashSale products={products} />
-      <Category />
-      <BestSelling />
+      <BestSelling products={products} />
       <Enhance />
-      <OurProducts />
+      <OurProducts products={products} />
       <NewArrival />
     </>
   );
