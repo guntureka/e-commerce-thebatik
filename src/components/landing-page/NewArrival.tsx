@@ -1,10 +1,10 @@
 "use client";
-import ProductsCard from "./product/ProductsCard";
+import ProductsCard from "@/components/ProductsCard";
 import { stop } from "react-icons-kit/fa/stop";
 import React, { useEffect, useState } from "react";
 import Icon from "react-icons-kit";
 import Slider from "react-slick";
-import { Card } from "./ui/card";
+import { Card } from "@/components/ui/card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Car } from "lucide-react";

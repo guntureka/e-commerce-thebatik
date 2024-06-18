@@ -1,12 +1,14 @@
 "use client";
-import ProductsCard from "./product/ProductsCard";
+import ProductsCard from "../product/ProductsCard";
 import { stop } from "react-icons-kit/fa/stop";
 import React, { useEffect, useState } from "react";
 import Icon from "react-icons-kit";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-export default function OurProducts() {
+import Timer from "./Timer";
+import Link from "next/link";
+export default function FlashSale() {
   const [products, setProducts] = React.useState([]);
   useEffect(() => {
     async function fetchData() {
@@ -18,14 +20,11 @@ export default function OurProducts() {
   }, []);
 
   const settings = {
-    className: "center",
     dots: true,
     infinite: true,
-    centerPadding: "60px",
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    rows :2,
     nextArrow: (
       <SampleNextArrow
         className={undefined}
@@ -70,12 +69,15 @@ export default function OurProducts() {
   return (
     <>
       <div className="container mt-10 mb-10 mx-auto">
-        <div className="flex flex-col items-start gap-4 w-120 h-24  ml-40 mt-20 mx-auto">
+        <div className="flex flex-col items-start gap-4 w-120 h-40  ml-40 mt-40">
           <div className="font-poppins font-semibold text-xl leading-5 text-left text-red-600">
-            <Icon icon={stop} size={24} className="text-red" /> Our Products
+            <Icon icon={stop} size={24} className="text-red" /> Today’s
           </div>
-          <div className="font-inter font-semibold text-3xl tracking-wide text-left ">
-            Explore Our Products
+          <div className="font-inter font-semibold text-3xl leading-12 tracking-wide text-left ">
+            <div className="flex gap-10">
+              Flash Sales
+              <Timer deadline="2025-12-31T23:59:59" />
+            </div>
           </div>
         </div>
         <div className="mx-32">
@@ -87,10 +89,13 @@ export default function OurProducts() {
             ))}
           </Slider>
         </div>
+
         <div className="mt-24 flex justify-center">
-          <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
-            View All Products
-          </button>
+          <Link href="/product">
+            <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
+              View All Products
+            </button>
+          </Link>
         </div>
       </div>
     </>

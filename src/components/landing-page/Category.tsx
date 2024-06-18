@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Card,CardContent } from "./ui/card";
+import { Card,CardContent } from "@/components/ui/card";
 
 interface Category {
   id: number;

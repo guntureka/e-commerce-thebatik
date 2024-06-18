@@ -50,6 +50,9 @@ export const userSchema = z.object({
     message: "Minimum 8 character required!",
   }),
   role: z.nativeEnum(UserRole),
+  email: z.string().email({
+    message: "Invalid email!",
+  }),
 });
 
 export const categorySchema = z.object({
