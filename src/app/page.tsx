@@ -11,11 +11,14 @@ import BestSelling from "@/components/landing-page/BestSelling";
 import Banner from "@/components/landing-page/Banner";
 import OurProducts from "@/components/landing-page/OurProducts";
 import Enhance from "@/components/landing-page/Enhance";
-export default function Home() {
+import { getAllProducts } from "@/lib/actions/product";
+export default async function Home() {
+  const products = await getAllProducts();
+
   return (
     <>
       <Banner />
-      <FlashSale />
+      <FlashSale products={products} />
       <Category />
       <BestSelling />
       <Enhance />

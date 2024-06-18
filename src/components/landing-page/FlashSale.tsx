@@ -9,16 +9,22 @@ import "slick-carousel/slick/slick-theme.css";
 import Timer from "./Timer";
 import Link from "next/link";
 import { getAllProducts } from "@/lib/actions/product";
-export default function FlashSale() {
-  const [products, setProducts] = React.useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch("/dummyProducts.json");
-      const data = await response.json();
-      setProducts(data.products);
-    }
-    fetchData();
-  }, []);
+import { Product } from "@prisma/client";
+
+interface FlashsaleProps {
+  products: Product[] | null | undefined;
+}
+
+export default function FlashSale({ products }: FlashsaleProps) {
+  // const [products, setProducts] = React.useState([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch("/dummyProducts.json");
+  //     const data = await response.json();
+  //     setProducts(data.products);
+  //   }
+  //   fetchData();
+  // }, []);
 
   const settings = {
     dots: true,
@@ -83,7 +89,7 @@ export default function FlashSale() {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {products.map((product, index) => (
+            {products!.map((product, index) => (
               <div key={index} className="px-2">
                 <ProductsCard product={product} />
               </div>
