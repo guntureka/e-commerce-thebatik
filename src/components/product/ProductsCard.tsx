@@ -1,9 +1,18 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import * as React from "react";
+import { useState } from "react";
+import { createCartItem } from "@/lib/actions/cart-item";
+import { createCart } from "@/lib/actions/cart";
+
 export default function ProductsCard({ product }: { product: any }) {
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>("");
   const { name, price, discount, rating, images, timesBought } = product;
   const discountedPrice = price - (discount / 100) * price;
+  const onSubmit = async () =>{
+    
+  }
   return (
     <>
       <Card className="w-64 h-80 mx-auto border-none shadow-none">

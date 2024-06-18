@@ -1,6 +1,5 @@
 import { db } from "@/utils/db";
 
-
 export const createCartItem = async (data: any) => {
     try {
       const cartItem = await db.cart_Item.create({ data });

@@ -1,5 +1,5 @@
 "use client";
-import ProductsCard from "./ProductsCard";
+import ProductsCard from "./product/ProductsCard";
 import { stop } from "react-icons-kit/fa/stop";
 import React, { useEffect, useState } from "react";
 import Icon from "react-icons-kit";
