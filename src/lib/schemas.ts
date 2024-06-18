@@ -82,3 +82,14 @@ export const wishlistSchema = z.object({
   userId: z.string(),
   productId: z.string(),
 });
+
+export const addressSchema = z.object({
+  name: z.string(),
+  street: z.string(),
+  city: z.string(),
+  province: z.string(),
+  country: z.string(),
+  postalCode: z.string(),
+  isUse: z.boolean(),
+  userId: z.string(),
+});
