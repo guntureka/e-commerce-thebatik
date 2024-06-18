@@ -34,11 +34,11 @@ const formSchema = z.object({
 const AccountPage  = async () => {
   const session = await auth();
   if (!session) {
-    return <div>loading...</div>;
+    return <div>loading session...</div>;
   }
   const user = await getUserById(session.user.id!);
   if (!user) {
-    return <div>loading...</div>;
+    return <div>loading user...</div>;
   }
   
 
