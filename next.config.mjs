@@ -6,6 +6,10 @@ const nextConfig = {
         hostname: "img.icons8.com",
         protocol: "https",
       },
+      {
+        hostname: "nefugoazkvksizyotlwa.supabase.co",
+        protocol: "https",
+      },
     ],
   },
 };
