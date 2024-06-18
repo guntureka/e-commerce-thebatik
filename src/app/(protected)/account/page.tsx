@@ -38,7 +38,6 @@ const formSchema = z.object({
 });
 
 export default function Account() {
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -126,7 +125,7 @@ export default function Account() {
                   />
                   <FormField
                     control={form.control}
-                    name="FirstName"
+                    name="LastName"
                     render={({ field }) => (
                       <FormItem className="w-[330px]">
                         <FormLabel>Last Name</FormLabel>

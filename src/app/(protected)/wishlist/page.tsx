@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProductsCard from "@/components/ProductsCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Icon from "react-icons-kit";
 import { stop } from "react-icons-kit/fa/stop";
-export default function wishlist() {
-  const [products, setProducts] = React.useState([]);
+import ProductsCard from "@/components/ProductsCard";
+export default function Wishlist() {
+  const [Products, setProducts] = React.useState([]);
   useEffect(() => {
     async function fetchData() {
       const response = await fetch("/dummyProducts.json");
@@ -82,7 +82,7 @@ export default function wishlist() {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {products.map((product, index) => (
+            {Products.map((product, index) => (
               <div key={index} className="px-2">
                 <ProductsCard product={product} />
               </div>
@@ -103,7 +103,7 @@ export default function wishlist() {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {products.map((product, index) => (
+            {Products.map((product, index) => (
               <div key={index} className="px-2">
                 <ProductsCard product={product} />
               </div>
