@@ -5,6 +5,9 @@ import {
   uploadFile,
   uploadMultipleFile,
 } from "@/lib/actions/file";
+import { createProduct } from "@/lib/actions/product";
+import { createUser } from "@/lib/actions/user";
+import { db } from "@/utils/db";
 import { supabase } from "@/utils/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -16,6 +19,8 @@ export const GET = async () => {
     "publics"
   );
 
+  const path = data.publicUrl;
+
   return Response.json(data);
 };
 
@@ -23,6 +28,24 @@ export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
   const images: File | null = formData.get("images") as File;
   const { data } = await uploadFile(images, "publics");
+
+  if (data) {
+    const publicurl = await getFileURL(data.path, "publics");
+
+    const response = await createProduct({
+      categoryId: "clxku5tx40056e41cmixwj9hk",
+      colors: ["asndajskdad", "asdasdasd"],
+      description: "asdasd",
+      name: "asdkaslkdnad",
+      price: 2000,
+      quantity: 2,
+      sizes: ["asdasd"],
+      discount: 2,
+      images: [publicurl.data.publicUrl],
+    });
+    return NextResponse.json({ response });
+  }
+
   // Handle the file upload logic here
   return NextResponse.json({ data });
 };
@@ -35,6 +58,7 @@ export const PUT = async (req: NextRequest) => {
     images,
     "publics"
   );
+
   // Handle the file upload logic here
   return NextResponse.json(data);
 };

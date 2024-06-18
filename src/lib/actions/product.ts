@@ -16,8 +16,10 @@ export const createProduct = async (data: z.infer<typeof productSchema>) => {
   const res = validatedFields.data;
 
   try {
-    await db.product.create({
-      data: res,
+    await db.product.createMany({
+      data: {
+        ...res,
+      },
     });
 
     return {

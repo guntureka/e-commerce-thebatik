@@ -5,18 +5,18 @@ import { categorySchema } from "../schemas";
 import { z } from "zod";
 
 export const createCategory = async (data: z.infer<typeof categorySchema>) => {
-  const validatedFields = categorySchema.safeParse(data);
-
-  if (!validatedFields.success) {
-    return {
-      error: "invalid fields",
-    };
-  }
-
-  const res = validatedFields.data;
-
   try {
-    await db.category.create({
+    const validatedFields = categorySchema.safeParse(data);
+
+    if (!validatedFields.success) {
+      return {
+        error: "invalid fields",
+      };
+    }
+
+    const res = validatedFields.data;
+
+    await db.category.createMany({
       data: {
         name: res.name,
         description: res.description,
@@ -27,6 +27,7 @@ export const createCategory = async (data: z.infer<typeof categorySchema>) => {
       success: "Category created successfully",
     };
   } catch (error) {
+    console.log(error);
     return {
       error: "Something went wrong",
     };

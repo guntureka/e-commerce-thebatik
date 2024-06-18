@@ -93,3 +93,9 @@ export const addressSchema = z.object({
   isUse: z.boolean(),
   userId: z.string(),
 });
+
+export const transactionSchema = z.object({
+  userId: z.string(),
+  total: z.number(),
+  product: z.array(z.string()),
+});
