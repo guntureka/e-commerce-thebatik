@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Icon from "react-icons-kit";
 import { stop } from "react-icons-kit/fa/stop";
 export default function wishlist() {
-  const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     async function fetchData() {
       const response = await fetch("/dummyProducts.json");

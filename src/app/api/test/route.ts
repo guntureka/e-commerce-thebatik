@@ -3,20 +3,20 @@ import { getAllUser } from "@/lib/actions/user";
 import { categorySchema, productSchema } from "@/lib/schemas";
 import { db } from "@/utils/db";
 import { NextRequest } from "next/server";
-import { createWishlist, deleteWishlist, updateWishlist } from "@/lib/actions/wishlist";
-import { createCategory } from "@/lib/actions/category";
+import {
+  createWishlist,
+  deleteWishlist,
+  updateWishlist,
+} from "@/lib/actions/wishlist";
 import { deleteCategory } from "@/lib/actions/category";
 import { uploadFile } from "@/lib/actions/file";
 import { createProduct } from "@/lib/actions/product";
 import { createCart, deleteCart } from "@/lib/actions/cart";
 
-const test  = async () => {
-  const result = await deleteCart(
-    'clxkvjxgd00082tir1f61tno9'
-  )
-}
+const test = async () => {
+  const result = await deleteCart("clxkvjxgd00082tir1f61tno9");
+};
 
-<<<<<<< HEAD
 export const GET = async () => {
   const data = await getAllCategories();
 
@@ -169,6 +169,3 @@ export const DELETE = async (req: NextRequest) => {
     });
   }
 };
-=======
-test()
->>>>>>> d022f28be5a70b739f12ec4178baa013ca5fbd20
