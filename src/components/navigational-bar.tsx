@@ -63,7 +63,7 @@ export default function Navbar({ session }: NavbarProps) {
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href={"/about-us"} legacyBehavior passHref>
+                <Link href={"/about"} legacyBehavior passHref>
                   <NavigationMenuLink
                     className={`hover:underline ${
                       pathname === "/about-us" ? "underline" : ""
