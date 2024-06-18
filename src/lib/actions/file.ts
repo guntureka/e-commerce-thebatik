@@ -12,7 +12,7 @@ export const uploadFile = async (file: File, bucket: string) => {
    * The generated filename for the file.
    * It consists of the current date and a unique identifier.
    */
-  const filename = `${new Date().toISOString()}-${uuidv4()}-${file.name.}`;
+  const filename = `${new Date().toISOString()}-${uuidv4()}-${file.name}`;
 
   const data = await supabase.storage.from(bucket).upload(filename, file);
 
