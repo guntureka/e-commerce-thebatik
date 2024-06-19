@@ -1,15 +1,34 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CartCard from "@/components/CartCard";
+import { useSession } from "next-auth/react";
+import { getCartByUserId } from "@/lib/actions/cart";
+import { getProductById } from "@/lib/actions/product";
 
 export default function Cart() {
+  const session = useSession();
   const [cartItems, setCartItems] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(" "); // 
-      const data = await response.json();
-      setCartItems(data);
+      const response = await getCartByUserId(session.data?.user.id!);
+
+      const products = await Promise.all(
+        response?.map(async (res) => {
+          const response = await getProductById(res.productId);
+
+          return {
+            id: res.id,
+            name: response?.name,
+            price: response?.price,
+            images: response?.images,
+            quantity: res.quantity,
+          };
+        }) || []
+      );
+
+      console.log(products);
+      setCartItems(products);
     }
     fetchData();
   }, []);
