@@ -84,13 +84,14 @@ export default function BestSelling({ products }: BestsellingProps) {
             Best Selling Products
           </div>
         </div>
-         <div className="mx-32">
+        <div className="mx-32">
           <Slider {...settings}>
-            {products!.map((product, index) => (
-              <div key={index} className="px-2">
-                <ProductsCard product={product} />
-              </div>
-            ))}
+            {products &&
+              products?.map((product, index) => (
+                <div key={index} className="px-2">
+                  <ProductsCard product={product} />
+                </div>
+              ))}
           </Slider>
         </div>
 
