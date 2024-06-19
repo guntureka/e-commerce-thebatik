@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Card,CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface Category {
   id: number;
@@ -90,20 +90,25 @@ export default function Category() {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {categories.map((category) => (
-              <div key={category.id}>
-                <Card className="border-none shadow-none">
-                  <CardContent>
-                    <div className="flex flex-col items-center">
-                      <div className="text-center">
-                        <h3 className="text-lg font-semibold">{category.name}</h3>
-                        <p className="text-gray-500">{category.description}</p>
+            {categories &&
+              categories.map((category) => (
+                <div key={category.id}>
+                  <Card className="border-none shadow-none">
+                    <CardContent>
+                      <div className="flex flex-col items-center">
+                        <div className="text-center">
+                          <h3 className="text-lg font-semibold">
+                            {category.name}
+                          </h3>
+                          <p className="text-gray-500">
+                            {category.description}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
           </Slider>
         </div>
       </div>

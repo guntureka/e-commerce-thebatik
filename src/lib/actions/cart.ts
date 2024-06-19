@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/utils/db";
 import { z } from "zod";
 import { cartSchema } from "../schemas";
@@ -13,12 +15,21 @@ export const createCart = async (data: z.infer<typeof cartSchema>) => {
 
     const res = validatedFields.data;
 
-    await db.cart.create({ data: res });
+    console.log(res);
+
+    await db.cart.create({
+      data: {
+        quantity: res.quantity,
+        userId: res.userId,
+        productId: res.productId,
+      },
+    });
 
     return {
       success: "Cart created successfully",
     };
   } catch (error) {
+    console.log(error);
     return {
       error: "Something went wrong",
     };
@@ -30,6 +41,18 @@ export const getCartById = async (id: string) => {
     const cart = await db.cart.findUnique({
       where: {
         id,
+      },
+    });
+    return cart;
+  } catch (error) {
+    return null;
+  }
+};
+export const getCartByUserId = async (id: string) => {
+  try {
+    const cart = await db.cart.findMany({
+      where: {
+        userId: id,
       },
     });
     return cart;

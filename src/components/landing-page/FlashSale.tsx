@@ -89,11 +89,12 @@ export default function FlashSale({ products }: FlashsaleProps) {
         </div>
         <div className="mx-32">
           <Slider {...settings}>
-            {products?.map((product, index) => (
-              <div key={index} className="px-2">
-                <ProductsCard product={product} />
-              </div>
-            ))}
+            {products &&
+              products?.map((product, index) => (
+                <div key={index} className="px-2">
+                  <ProductsCard product={product} />
+                </div>
+              ))}
           </Slider>
         </div>
 
