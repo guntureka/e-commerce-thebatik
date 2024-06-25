@@ -46,6 +46,39 @@ export const getProductById = async (id: string) => {
   }
 };
 
+export const getProductNameById = async (id: string) => {
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        name: true, 
+      },
+    });
+    return product?.name || null;
+  } catch (error) {
+    console.error("Error fetching product name:", error); 
+  }
+};
+
+export const getProductPriceById = async (id: string) => {
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        price: true, 
+      },
+    });
+    return product?.price || null;
+  } catch (error) {
+    console.error("Error fetching product name:", error); 
+  }
+};
+
+
 export const getProductByCategoryId = async (id: string) => {
   try {
     const product = await db.product.findMany({

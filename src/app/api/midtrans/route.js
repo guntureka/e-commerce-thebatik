@@ -1,4 +1,5 @@
 import midtransClient from "midtrans-client";
+import { NextResponse } from "next/server";
 
 // let coreApi = new midtransClient.CoreApi({
 //   isProduction: false,
@@ -12,21 +13,22 @@ let snap = new midtransClient.Snap({
   clientKey: process.env.NEXT_MIDTRANS_CLIENT,
 });
 
-export const CreateTransaction = async (params) => {
-  const { total_price, products } = params;
+export const POST = async (request) => {
+  const { total_price, products } = await request.json();
 
-  //   return console.log(products);
+  // return console.log(total_price);
 
   let parameter = {
     item_details: products,
     transaction_details: {
-      order_id: "order-1",
-      gross_ammount: total_price,
+      order_id: "order-5",
+      gross_amount: Number(total_price),
     },
   };
 
-  console.log(parameter);
+  // console.log(parameter);
 
   const token = await snap.createTransactionToken(parameter);
   console.log(token);
+  return NextResponse.json({ token });
 };
