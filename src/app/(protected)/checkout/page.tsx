@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -21,6 +21,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import CartCard from "@/components/CartCard";
+import Image from "next/image";
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -62,155 +64,80 @@ export default function Checkout() {
     console.log(values);
   }
 
+  const [cartItems, setCartItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(" "); //
+      const data = await response.json();
+      setCartItems(data);
+    }
+    fetchData();
+  }, []);
+
+  const handleUpdate = async (id: any, quantity: any) => {
+    try {
+      const response = await fetch(` `, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity }),
+      });
+      const updatedItem = await response.json();
+      setCartItems((items: any[]) =>
+        items.map((item) =>
+          item.id === id ? { ...item, quantity: updatedItem.quantity } : item
+        )
+      );
+    } catch (error) {
+      console.error("Error updating cart item:", error);
+    }
+  };
+
+  const handleRemove = async (id: any) => {
+    try {
+      await fetch(` `, {
+        method: "DELETE",
+      });
+      setCartItems((items) => items.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Error removing cart item:", error);
+    }
+  };
+
   return (
     <>
-      <div>
-        <div className="flex flex-row justify-between font-[14px] mx-24 mt-10 mb-10">
+      <div className="mx-24">
+        <div className="font-[14px] my-10">
           <h1>
             Account / My Account / Product / View Cart /{" "}
             <span className="font-semibold">CheckOut</span>
           </h1>
         </div>
-        <div className="pb-[140px] flex flex-row justify-around">
-          <div className="mt-20 mx-24">
-            <Card className="flex flex-col border-none outline-none shadow-none justify-center">
-              <CardHeader>
-                <CardTitle className="text-[36px] font-medium">
-                  Billing Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="">
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-1 gap-[50px]">
-                      <FormField
-                        control={form.control}
-                        name="firstName"
-                        render={({ field }) => (
-                          <FormItem className="w-[330px]">
-                            <FormLabel>First Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="shadcn"
-                                {...field}
-                                className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="streetAddress"
-                        render={({ field }) => (
-                          <FormItem className="w-[330px]">
-                            <FormLabel>Street Address</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="123 Main St"
-                                {...field}
-                                className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="apartment"
-                        render={({ field }) => (
-                          <FormItem className="w-[330px]">
-                            <FormLabel>
-                              Apartment, floor, etc. (optional)
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Apartment, floor, etc."
-                                {...field}
-                                className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="city"
-                        render={({ field }) => (
-                          <FormItem className="w-[330px]">
-                            <FormLabel>Town/City</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="City"
-                                {...field}
-                                className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="phoneNumber"
-                        render={({ field }) => (
-                          <FormItem className="w-[330px]">
-                            <FormLabel>Phone Number</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="1234567890"
-                                {...field}
-                                className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem className="w-[330px]">
-                            <FormLabel>Email Address</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="email@example.com"
-                                {...field}
-                                className="mb-2 bg-white text-black border-t-0 border-r-0 border-l-0 border-b-1 border-b-black p-0 w-full outline-none hover:ring-0 rounded-none focus-visible:rounded focus-visible:border-none"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="flex items-center space-x-2 mt-6">
-                      <Checkbox id="terms" />
-                      <label
-                        htmlFor="terms"
-                        className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Save this information for faster check-out next time
-                      </label>
-                    </div>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
+        <div className="pb-[140px] grid grid-cols-2 mx-auto justify-center">
+          <div className="mt-20">
+            <div className="container">
+              <div className="flex justify-evenly border-2 rounded-lg py-4">
+                <div>Products</div>
+                <div>Price</div>
+                <div>Quantity</div>
+                <div>Subtotal</div>
+              </div>
+            </div>
+            <div>
+              {cartItems.map((cartItem, index) => (
+                <div key={index} className="px-2">
+                  <CartCard
+                    cartItem={cartItem}
+                    onUpdate={handleUpdate}
+                    onRemove={handleRemove}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="w-[422px] mt-[160px] mx-24">
-            <div className="flex flex-row justify-between py-4">
-              <p>Rayon Short</p>
-              <p>$650</p>
-            </div>
-            <div className="flex flex-row justify-between py-4">
-              <p>Modern Batik</p>
-              <p>$1110</p>
-            </div>
+          <div className="w-100 mt-[160px] mx-24">
             <div className="flex flex-row justify-between py-4 border-b-[1px] border-b-black">
               <p>Subtotal: </p>
               <p>$1750</p>
@@ -227,10 +154,22 @@ export default function Checkout() {
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="default" id="r1" />
                 <Label htmlFor="r1">Bank</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="r2" />
-                <Label htmlFor="r2">Cash on delivery</Label>
+                <div className="grid grid-cols-2 mx-auto items-center gap-2">
+                  <Image
+                    src={"/checkout/visa.png"}
+                    alt="visa"
+                    width={30}
+                    height={0}
+                    className="w-full"
+                  />
+                  <Image
+                    src={"/checkout/mastercard.png"}
+                    alt="mastercard"
+                    width={30}
+                    height={0}
+                    className="w-full"
+                  />
+                </div>
               </div>
             </RadioGroup>
             <Button
