@@ -33,7 +33,7 @@ export default function ProductsView({ products }: ProductsViewProps) {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    rows: 4,
+    rows: 2,
     nextArrow: (
       <SampleNextArrow
         className={undefined}

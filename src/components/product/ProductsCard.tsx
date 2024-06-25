@@ -53,12 +53,12 @@ export default function ProductsCard({ product }: { product: Product | null }) {
         <div className="flex flex-col">
           <Card>
             <div className="relative">
-              <img src={images[0]} alt="product" className="w-full h-auto" />
+              <img src={images[0]} alt="product" className="h-auto" />
             </div>
           </Card>
           <CardContent>
             <CardHeader></CardHeader>
-            <h3 className="text-lg font-semibold">{name}</h3>
+            <h3 className="text-lg font-semibold truncate">{name}</h3>
             <div className="flex items-center ">
               <span className="text-red-500 font-bold">{`$${discountedPrice}`}</span>
               <span className="text-gray-500 line-through ml-2">{`$${price}`}</span>
