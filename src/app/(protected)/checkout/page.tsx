@@ -4,22 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CartCard from "@/components/CartCard";
 import Image from "next/image";
@@ -117,13 +103,12 @@ export default function Checkout() {
         </div>
         <div className="pb-[140px] grid grid-cols-2 mx-auto justify-center">
           <div className="mt-20">
-            <div className="container">
-              <div className="flex justify-evenly border-2 rounded-lg py-4">
-                <div>Products</div>
-                <div>Price</div>
-                <div>Quantity</div>
-                <div>Subtotal</div>
-              </div>
+            <div className="flex justify-evenly border-2 rounded-lg py-4">
+              <div>Products</div>
+              <div>Price</div>
+              <div>Quantity</div>
+              <div>Subtotal</div>
+              <div></div>
             </div>
             <div>
               {cartItems.map((cartItem, index) => (
@@ -140,7 +125,13 @@ export default function Checkout() {
           <div className="w-100 mt-[160px] mx-24">
             <div className="flex flex-row justify-between py-4 border-b-[1px] border-b-black">
               <p>Subtotal: </p>
-              <p>$1750</p>
+              <p>
+                $
+                {cartItems.reduce(
+                  (acc, item) => acc + item.price * item.quantity,
+                  0
+                )}
+              </p>
             </div>
             <div className="flex flex-row justify-between py-4 border-b-[1px] border-b-black">
               <p>Shipping: </p>
@@ -148,7 +139,13 @@ export default function Checkout() {
             </div>
             <div className="flex flex-row justify-between py-4">
               <p>Total:</p>
-              <p>$1750</p>
+              <p>
+                $
+                {cartItems.reduce(
+                  (acc, item) => acc + item.price * item.quantity,
+                  0
+                )}
+              </p>
             </div>
             <RadioGroup defaultValue="comfortable" className="gap-8 mb-8">
               <div className="flex items-center space-x-2">
