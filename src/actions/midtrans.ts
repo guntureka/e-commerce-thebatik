@@ -76,7 +76,7 @@ const signatureKeyCompare = (
     The logic to generate or calculate signature_key is explained below: SHA512(order_id+status_code+gross_amount+ServerKey)
     */
 
-  const userSignatureKey = `${order_id}${status_code}${gross_amount}${process.env.NEXT_PUBLIC_MIDTRANS_SECRET_KEY}`;
+  const userSignatureKey = `${order_id}${status_code}${gross_amount}${process.env.MIDTRANS_SECRET_KEY}`;
 
   const hash = createHash("sha512").update(userSignatureKey).digest("hex");
   console.log(hash);
