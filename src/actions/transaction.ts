@@ -21,6 +21,29 @@ export const getAllTransaction = async () => {
         user: true,
         transactionItems: true,
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    return transactions;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTransactionByUserId = async (id: string) => {
+  try {
+    const transactions = await db.transaction.findMany({
+      where: {
+        userId: id,
+      },
+      include: {
+        transactionItems: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return transactions;

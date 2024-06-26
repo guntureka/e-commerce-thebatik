@@ -181,12 +181,12 @@ export default function Navbar({ session }: NavbarProps) {
                       </SheetClose>
                     ) : (
                       <SheetClose asChild>
-                        <Link href={"/profile"} className="text-start">
+                        <Link href={"/account"} className="text-start">
                           <Button
                             variant={"ghost"}
                             className="w-full flex justify-start"
                           >
-                            Profile
+                            Account
                           </Button>
                         </Link>
                       </SheetClose>

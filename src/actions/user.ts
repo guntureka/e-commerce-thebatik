@@ -1,6 +1,6 @@
 "use server";
 
-import { userSchema } from "@/lib/schemas";
+import { accountSchema, userSchema } from "@/lib/schemas";
 import { db } from "@/utils/db";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
@@ -156,6 +156,70 @@ export const deleteUserById = async (id: string) => {
 
     return {
       success: "User deleted successful",
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateAccountById = async (
+  id: string,
+  values: z.infer<typeof accountSchema>
+) => {
+  try {
+    const validatedFields = accountSchema.safeParse(values);
+
+    if (!validatedFields.success) {
+      return {
+        error: "Invalid fields!",
+      };
+    }
+
+    const { name, email, password, address } = validatedFields.data;
+
+    const user = await getUserById(id);
+
+    if (!user) {
+      return {
+        error: "User doesnt exist!",
+      };
+    }
+
+    if (!password) {
+      await db.user.update({
+        where: {
+          id,
+        },
+        data: {
+          address,
+        },
+      });
+    } else {
+      const passwordCompare = password == user.password! ? true : false;
+
+
+      let passwordData = "";
+
+      if (passwordCompare) {
+        passwordData = user.password!;
+      } else {
+        passwordData = await bcrypt.hash(password, 10);
+      }
+
+      await db.user.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          email,
+          password: passwordData,
+        },
+      });
+    }
+
+    return {
+      success: "User updated successful",
     };
   } catch (error) {
     console.log(error);

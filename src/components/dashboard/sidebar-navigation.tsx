@@ -4,30 +4,11 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-const Links = [
-  {
-    href: "/dashboard",
-    name: "Dashboard",
-  },
-  {
-    href: "/dashboard/categories",
-    name: "Categories",
-  },
-  {
-    href: "/dashboard/products",
-    name: "Products",
-  },
-  {
-    href: "/dashboard/users",
-    name: "Users",
-  },
-  {
-    href: "/dashboard/transactions",
-    name: "Transactions",
-  },
-];
+interface NavigationProps {
+  Links: { href: string; name: string }[];
+}
 
-const SidebarNavigation = () => {
+const SidebarNavigation = ({ Links }: NavigationProps) => {
   return (
     <div className="flex flex-col w-full gap-3 p-4 justify-center items-center">
       {Links.map((link, index) => (

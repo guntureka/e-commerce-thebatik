@@ -3,28 +3,16 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
+} from "@/components/ui/resizable"; // Update the import statement to the correct path
 import React from "react";
 
 const Links = [
   {
-    href: "/dashboard",
-    name: "Dashboard",
+    href: "/account",
+    name: "Account",
   },
   {
-    href: "/dashboard/categories",
-    name: "Categories",
-  },
-  {
-    href: "/dashboard/products",
-    name: "Products",
-  },
-  {
-    href: "/dashboard/users",
-    name: "Users",
-  },
-  {
-    href: "/dashboard/transactions",
+    href: "/account/transactions",
     name: "Transactions",
   },
 ];
