@@ -1,7 +1,5 @@
 "use client";
 
-import { Car } from "lucide-react";
-import { Card, CardContent, CardDescription } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 

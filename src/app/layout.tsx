@@ -30,16 +30,16 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <SessionProviders>
-      <html lang="en">
-        <body className={inter.className}>
+    <html lang="en">
+      <body className={inter.className}>
+        <SessionProviders>
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <Navbar session={session} />
           {children}
           <Footer />
           <Toaster />
-        </body>
-      </html>
-    </SessionProviders>
+        </SessionProviders>
+      </body>
+    </html>
   );
 }
