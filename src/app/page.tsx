@@ -1,11 +1,9 @@
 import { getAllCategories } from "@/actions/category";
 import { getAllProducts } from "@/actions/product";
-import AllProducts from "@/components/landing-page/all-product";
-import Banner from "@/components/landing-page/banner";
-import CategoryComponent from "@/components/landing-page/category";
-import FlashSale from "@/components/landing-page/flash-sale";
-import ProductsView from "@/components/product/product-view";
-import Image from "next/image";
+import AllProducts from "../components/landing-page/all-product";
+import Banner from "../components/landing-page/banner";
+import CategoryComponent from "../components/landing-page/category";
+import FlashSale from "../components/landing-page/flash-sale";
 
 export default async function Home() {
   const categories = await getAllCategories();
