@@ -1,5 +1,5 @@
-import Icon from "react-icons-kit";
-import { chevronRight } from "react-icons-kit/fa/chevronRight";
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Category } from "@prisma/client";

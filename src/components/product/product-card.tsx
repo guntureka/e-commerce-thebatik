@@ -70,7 +70,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
           <h3 className="text-lg font-semibold truncate">{product.name}</h3>
           <div className="flex items-center ">
-            <span className="text-red-500 font-bold">{`$${discountedPrice}`}</span>
+            <span className="text-red-500 font-bold">{`Rp ${discountedPrice}`}</span>
             <span className="text-gray-500 line-through ml-2">{`$${product.price}`}</span>
           </div>
           <div>
