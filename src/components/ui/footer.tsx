@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="flex flex-col justify-center items-center md:px-24 px-10 py-10 bg-black">
+    <footer className="flex flex-col justify-center items-center md:px-24 px-10 py-10 bg-black">
       <div className="flex flex-col md:flex-row items-start justify-between gap-10 w-full">
         <div>
           <Image src={"/logo-header.png"} alt="logo" width={150} height={40} />
@@ -38,6 +38,6 @@ export default function Footer() {
           <p className="text-sm">© 2024 SCDB. All Rights Reserved</p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

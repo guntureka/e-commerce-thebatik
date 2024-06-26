@@ -3,13 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import SessionProviders from "@/components/session-providers";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "./api/uploadthing/core";
-
-import Navbar from "@/components/navbar";
 import { auth } from "@/auth";
-import Footer from "@/components/footer";
+import Navbar from "@/components/ui/navbar";
+import Footer from "@/components/ui/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +29,6 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProviders>
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <Navbar session={session} />
           {children}
           <Footer />
