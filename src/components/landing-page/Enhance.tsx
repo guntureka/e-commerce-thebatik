@@ -1,6 +1,6 @@
 "use client";
 
-import Timer from "./Timer";
+import Timer from "./timer";
 
 export default function Enhance() {
   return (
