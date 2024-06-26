@@ -3,7 +3,10 @@ export const publicRoutes = [
   "/contact-us",
   "/about-us",
   "/api/uploadthing",
-  "/api/midtrans/notification"
+  "/api/midtrans/notification",
+  "/forgot-password",
+  "/new-password",
+  "/verify-email",
 ];
 
 export const authRoutes = ["/sign-in", "/sign-up"];
