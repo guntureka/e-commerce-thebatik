@@ -1,8 +1,8 @@
 import { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
-import { signinSchema } from "./lib/schemas";
-import { getUserByEmail } from "./lib/actions/user";
+import { signinSchema } from "@/lib/schemas";
+import { getUserByEmail } from "@/actions/user";
 
 export default {
   providers: [

@@ -7,29 +7,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Card, CardContent } from "@/components/ui/card";
+import { Category } from "@prisma/client";
+import Link from "next/link";
 
-interface Category {
-  id: number;
-  name: string;
-  description: string;
+interface CategoryProps {
+  categories: Category[] | undefined;
 }
 
-export default function Category() {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await fetch("/dummyCategory.json");
-        const data: { category: Category[] } = await response.json();
-        setCategories(data.category);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    }
-    fetchCategories();
-  }, []);
-
+export default function CategoryComponent({ categories }: CategoryProps) {
   const settings = {
     dots: true,
     infinite: true,
@@ -78,47 +63,41 @@ export default function Category() {
   };
 
   return (
-    <>
-      <div className="container mb-10 mx-auto border-y">
-        <div className="flex flex-col items-start gap-4 w-120 h-40  ml-40 mt-20">
-          <div className="font-poppins font-semibold text-xl leading-5 text-left text-red-600">
-            <Icon icon={stop} size={24} className="text-red" /> Categories
-          </div>
-          <div className="font-inter font-semibold text-3xl leading-12 tracking-wide text-left ">
-            Categories
-          </div>
+    <div className="">
+      <div className="flex flex-col gap-4">
+        <div className="font-poppins font-semibold text-xl  text-left text-red-600">
+          <Icon icon={stop} size={24} className="text-red" />
+          <span>Categories</span>
         </div>
-        <div className="mx-32">
-          <Slider {...settings}>
-            {categories &&
-              categories.map((category) => (
-                <div key={category.id}>
-                  <Card className="border-none shadow-none">
-                    <CardContent>
-                      <div className="flex flex-col items-center">
-                        <div className="text-center">
-                          <h3 className="text-lg font-semibold">
-                            {category.name}
-                          </h3>
-                          <p className="text-gray-500">
-                            {category.description}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-          </Slider>
+        <div className="font-inter font-semibold text-3xl tracking-wide text-left ">
+          Categories
         </div>
       </div>
-    </>
+      <div className="px-10 m-0">
+        <Slider {...settings}>
+          {categories &&
+            categories.map((category) => (
+              <Card className="border-none shadow-none" key={category.id}>
+                <CardContent className="h-20 flex flex-col justify-center  m-0 p-0">
+                  <Link
+                    href={`?category=${category.slug!}`}
+                    className="flex justify-center"
+                  >
+                    {category.name}
+                    <p>{category.description}</p>
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
+        </Slider>
+      </div>
+    </div>
   );
 
   function SampleNextArrow(props: {
-    className: any;
-    style: any;
-    onClick: any;
+    className: string | undefined;
+    style: React.CSSProperties | undefined;
+    onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
   }) {
     const { className, style, onClick } = props;
     return (
@@ -136,9 +115,9 @@ export default function Category() {
   }
 
   function SamplePrevArrow(props: {
-    className: any;
-    style: any;
-    onClick: any;
+    className: string | undefined;
+    style: React.CSSProperties | undefined;
+    onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
   }) {
     const { className, style, onClick } = props;
     return (

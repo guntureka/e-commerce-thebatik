@@ -11,7 +11,7 @@ export const InfiniteMovingCards = ({
   className,
 }: {
   items: {
-    imageUrl: string
+    imageUrl: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -79,19 +79,22 @@ export const InfiniteMovingCards = ({
         ref={scrollerRef}
         className={cn(
           " flex min-w-full shrink-0 w-max flex-nowrap",
-          start && "animate-scroll ",
+          start && "animate-scroll "
         )}
       >
         {items.map((item, idx) => (
           <li
             className=" max-w-full relative flex-shrink-0 md:w-[300px] "
             style={{
-              background:
-                "white",
+              background: "white",
             }}
             key={idx}
           >
-            <img src={item.imageUrl} alt="Card Image" className="h-[240px] bg-white gap-2"/>
+            <img
+              src={item.imageUrl}
+              alt="Card Image"
+              className="h-[240px] bg-white gap-2"
+            />
           </li>
         ))}
       </ul>

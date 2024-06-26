@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
 
 export function OurClient() {
   return (
-    <div className="pb-[200px]">
-      <div className="text-[54px] p-[55px] text-black font-semibold text-center">
+    <div className="">
+      <div className="text-[54px]  text-black font-semibold text-center">
         Our Client
       </div>
       <div className="h-[20rem] rounded-md flex flex-col antialiased bg-white items-center justify-center relative ">

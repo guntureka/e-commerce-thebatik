@@ -1,10 +1,10 @@
-import { auth } from "./auth";
+import { auth } from "@/auth";
 import {
+  adminRoutes,
+  apiAuthPrefix,
+  apiTestPrefix,
   authRoutes,
   publicRoutes,
-  apiAuthPrefix,
-  adminRoutes,
-  apiTestPrefix,
 } from "./utils/routes";
 
 export default auth((req) => {
@@ -15,13 +15,10 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isTestRoute = nextUrl.pathname.startsWith(apiTestPrefix);
   const isAdminRoute = nextUrl.pathname.startsWith(adminRoutes);
+  // const isTestRoute = nextUrl.pathname.startsWith(apiTestPrefix);
 
   if (isApiAuthRoute) {
-    return;
-  }
-  if (isTestRoute) {
     return;
   }
 
@@ -38,7 +35,7 @@ export default auth((req) => {
   }
 
   if (isAdminRoute && user?.role !== "ADMIN") {
-    return; // redirect to /
+    return Response.redirect(new URL("/", nextUrl));
   }
 });
 

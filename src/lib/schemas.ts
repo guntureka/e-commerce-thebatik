@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { TransactionStatus, UserRole } from "@prisma/client";
 import { z } from "zod";
 
 export const signinSchema = z.object({
@@ -45,60 +45,96 @@ export const signupSchema = z
     }
   );
 
-export const userSchema = z.object({
-  name: z.string().min(8, {
-    message: "Minimum 8 character required!",
-  }),
-  role: z.nativeEnum(UserRole),
-  email: z.string().email({
-    message: "Invalid email!",
-  }),
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("Invalid email!").min(1, "Email required!"),
 });
+
+export const newPasswordSchema = z
+  .object({
+    password: z.string().min(8, {
+      message: "Minimum 8 character required!",
+    }),
+    confirmPassword: z.string().min(8, {
+      message: "Minimum 8 character required!",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password do not match!",
+    path: ["confirmPassword"],
+  })
+  .refine(
+    (data) => {
+      const hasNumber = /\d/.test(data.password);
+      const hasLowercase = /[a-z]/.test(data.password);
+      const hasUppercase = /[A-Z]/.test(data.password);
+      const hasSymbol = /\W|_/.test(data.password);
+
+      return hasNumber && hasLowercase && hasUppercase && hasSymbol;
+    },
+    {
+      message:
+        "Password must contain a number, a lowercase letter, an uppercase letter, and a symbol.",
+      path: ["password"],
+    }
+  );
 
 export const categorySchema = z.object({
-  name: z.string().min(1, {
-    message: "Name required!",
-  }),
-  description: z.string(),
+  name: z.string().min(1, "Name required!"),
+  description: z.string().optional(),
 });
+
+export const imageSchema = z
+  .instanceof(File)
+  .refine(
+    (file) => file.size < 4 * 1024 * 1024,
+    "Image must not be larger than 4MB"
+  )
+  .refine(
+    (file) => file.type.includes("image/*"),
+    "File must be an image format"
+  );
 
 export const productSchema = z.object({
-  categoryId: z.string(),
-  name: z.string(),
-  description: z.string(),
-  price: z.number().multipleOf(0.01),
-  discount: z.number().multipleOf(0.01).optional(),
-  quantity: z.number(),
-  sizes: z.array(z.string()),
-  colors: z.array(z.string()),
-  images: z.array(z.string()),
+  name: z.string().min(1, "Name required!"),
+  description: z.string().optional(),
+  discount: z.coerce.number(),
+  price: z.coerce.number(),
+  quantity: z.coerce.number(),
+  sizes: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "You have to select at least one item.",
+  }),
+  images: z.array(z.string()).optional(),
+  categoryId: z.string().min(1, "Category required"),
+  // colors: z.array(z.string()),
 });
 
-export const cartSchema = z.object({
-  quantity: z.number(),
-  userId: z.string(),
-  productId: z.string(),
-});
+export const userSchema = z
+  .object({
+    name: z.string(),
+    email: z.string().email({
+      message: "Invalid email!",
+    }),
+    password: z.string().min(8, {
+      message: "Minimum 8 character required!",
+    }),
+    role: z.nativeEnum(UserRole),
+  })
+  .refine(
+    (data) => {
+      const hasNumber = /\d/.test(data.password);
+      const hasLowercase = /[a-z]/.test(data.password);
+      const hasUppercase = /[A-Z]/.test(data.password);
+      const hasSymbol = /\W|_/.test(data.password);
 
-export const wishlistSchema = z.object({
-  quantity: z.number(),
-  userId: z.string(),
-  productId: z.string(),
-});
+      return hasNumber && hasLowercase && hasUppercase && hasSymbol;
+    },
+    {
+      message:
+        "Password must contain a number, a lowercase letter, an uppercase letter, and a symbol.",
+      path: ["password"],
+    }
+  );
 
-export const addressSchema = z.object({
-  name: z.string(),
-  street: z.string(),
-  city: z.string(),
-  province: z.string(),
-  country: z.string(),
-  postalCode: z.string(),
-  isUse: z.boolean(),
-  userId: z.string(),
-});
-
-export const transactionSchema = z.object({
-  userId: z.string(),
-  total: z.number(),
-  product: z.array(z.string()),
+export const transactionStatusSchema = z.object({
+  transactionStatus: z.nativeEnum(TransactionStatus),
 });

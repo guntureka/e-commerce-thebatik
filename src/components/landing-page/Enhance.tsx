@@ -1,5 +1,7 @@
 "use client";
-import Timer from "@/components/landing-page/Timer";
+
+import Timer from "./Timer";
+
 export default function Enhance() {
   return (
     <>
@@ -18,7 +20,6 @@ export default function Enhance() {
             <img src="https://picsum.photos/473/292" alt="" />
           </div>
         </div>
-      
       </div>
     </>
   );

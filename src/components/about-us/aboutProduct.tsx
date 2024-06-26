@@ -13,7 +13,7 @@ import Image from "next/image";
 export function AboutProduct() {
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-[34px] mb-[140px] w-[1170px] mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[34px]  mx-auto">
         <div>
           <Card className="w-[270px] h-[230px] rounded-none bg-white border-[1px] border-black">
             <div className=" pl-[25px] pt-[10px] pr-[30px]">

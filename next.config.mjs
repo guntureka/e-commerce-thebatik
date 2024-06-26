@@ -3,11 +3,11 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "img.icons8.com",
+        hostname: "utfs.io",
         protocol: "https",
       },
       {
-        hostname: "nefugoazkvksizyotlwa.supabase.co",
+        hostname: "img.icons8.com",
         protocol: "https",
       },
     ],

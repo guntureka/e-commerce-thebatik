@@ -1,171 +1,53 @@
-import { createCategory, getAllCategories } from "@/lib/actions/category";
-import { getAllUser } from "@/lib/actions/user";
-import { categorySchema, productSchema } from "@/lib/schemas";
-import { db } from "@/utils/db";
+import VerificationEmailTemplate from "@/components/email/verification-email";
+import { transporter } from "@/utils/mail";
+import { resend } from "@/utils/resend";
+import axios from "axios";
 import { NextRequest } from "next/server";
-import {
-  createWishlist,
-  deleteWishlist,
-  updateWishlist,
-} from "@/lib/actions/wishlist";
-import { deleteCategory } from "@/lib/actions/category";
-import { uploadFile } from "@/lib/actions/file";
-import { createProduct } from "@/lib/actions/product";
-import { createCart, deleteCart } from "@/lib/actions/cart";
-
-const test = async () => {
-  const result = await deleteCart("clxkvjxgd00082tir1f61tno9");
-};
 
 export const GET = async () => {
-  const data = await getAllCategories();
+  const images = await fetch(
+    `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_CLIENT_KEY}`
+  );
 
-  console.log("data;", data);
-  return Response.json(data);
+  return Response.json(images);
 };
 
-export const POST = async (req: NextRequest) => {
-  const datas = [
-    {
-      name: "Hand Stamped",
-      description: "Hand Stamped",
-    },
-    {
-      name: "Hand Written",
-      description: "Hand Written",
-    },
-    {
-      name: "Silk",
-      description: "Silk",
-    },
-    {
-      name: "Javanese",
-      description: "Javanese",
-    },
-    {
-      name: "Abstract",
-      description: "Abstract",
-    },
-    {
-      name: "Uniform Clothes",
-      description: "Uniform Clothes",
-    },
-    {
-      name: "Scarf Shawl",
-      description: "Scarf Shawl",
-    },
-    {
-      name: "Bag",
-      description: "Bag",
-    },
-    {
-      name: "Fabric",
-      description: "Fabric",
-    },
-  ];
+// export const POST = async (req: Request) => {
+//   const formData = req.formData();
+//   const file: File = (await formData).get("images") as File;
 
-  let response = datas.forEach(async (v) => {
-    const response = await createCategory({
-      name: v.name,
-      description: v.description,
-    });
+//   console.log(file.name);
 
-    return response;
-  });
+//   const fileBuffer = await file.arrayBuffer();
 
-  return Response.json({ data: response });
-};
+//   const images = await axios
+//     .post(`https://api.imgbb.com/1/upload`, fileBuffer, {
+//       headers: {
+//         Authorization: `key ${process.env.IMGBB_CLIENT_KEY}`,
+//       },
+//     })
+//     .then((res) => res.data)
+//     .catch((e) => console.log(e));
 
-// export const POST = async (req: NextRequest) => {
-//   const formData = await req.formData();
-//   const entries = formData.entries();
-//   const parsedData = Object.fromEntries(entries);
-
-//   return Response.json(parsedData)
-
-//   const validatedFields = productSchema.safeParse(parsedData);
-
-//   if (!validatedFields.success) {
-//     return Response.json({
-//       error: "invalid fields",
-//     });
-//   }
-
-//   const res = validatedFields.data;
-
-//   return Response.json({
-//     res,
-//   });
-
-//   // try {
-//   //   await db.category.create({
-//   //     data: {
-//   //       name: res.name,
-//   //       description: res.description,
-//   //     },
-//   //   });
-
-//   //   return Response.json({
-//   //     success: "Category created successfully",
-//   //   });
-//   // } catch (error) {
-//   //   return Response.json({
-//   //     error: "Something went wrong",
-//   //   });
-//   // }
+//   return Response.json({ name: file.name });
 // };
 
-export const PUT = async (req: NextRequest) => {
-  const params = req.nextUrl.searchParams;
-  const id = params.get("id");
-  const data = await req.json();
-  const validatedFields = categorySchema.safeParse(data);
-
-  if (!validatedFields.success) {
-    return Response.json({
-      error: "invalid fields",
-    });
-  }
-
-  const res = validatedFields.data;
-
+export async function POST(req: NextRequest) {
   try {
-    await db.category.update({
-      data: {
-        name: res.name,
-        description: res.description,
-      },
-      where: {
-        id: id!,
-      },
+    
+    const { data, error } = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
+      to: ["guntureka1020@gmail.com"],
+      subject: "Hello world",
+     react: VerificationEmailTemplate({emailVerificationToken: "asdasdsad"}),
     });
 
-    return Response.json({
-      success: "Category created successfully",
-    });
+    if (error) {
+      return Response.json({ error }, { status: 500 });
+    }
+
+    return Response.json(data);
   } catch (error) {
-    return Response.json({
-      error: "Something went wrong",
-    });
+    return Response.json({ error }, { status: 500 });
   }
-};
-
-export const DELETE = async (req: NextRequest) => {
-  const params = req.nextUrl.searchParams;
-  const id = params.get("id");
-  try {
-    await db.category.delete({
-      where: {
-        id: id!,
-      },
-    });
-
-    return Response.json({
-      success: "Category created successfully",
-    });
-  } catch (error) {
-    return Response.json({
-      error: "Something went wrong",
-    });
-  }
-};
+}

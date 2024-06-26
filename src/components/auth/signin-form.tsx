@@ -25,7 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
-import { signinAuth } from "@/lib/actions/auth";
+import { signinAuth } from "@/actions/auth";
 import { useRouter } from "next/navigation";
 
 const SigninForm = () => {
@@ -58,7 +58,7 @@ const SigninForm = () => {
             toast({
               title: "Error!",
               description: data.error,
-              variant: "success",
+              variant: "destructive",
             });
           }
         })
@@ -117,6 +117,9 @@ const SigninForm = () => {
                 </FormItem>
               )}
             />
+            <Link href={"/forgot-password"} className="text-sm">
+              Forgot password?
+            </Link>
             <Button
               type="submit"
               variant={"destructive"}

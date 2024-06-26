@@ -4,8 +4,9 @@ import * as React from "react";
 export default function Profile() {
   return (
     <>
-      <div className="flex flex-row justify-center mb-[140px]">
-        <div className="w-6/12 ml-[68px] mr-[57px] mt-[77px]">
+      <div className="grid grid-col-1 md:grid-cols-2 justify-center gap-10">
+        {/* <div className="flex flex-col-reverse md:flex-row justify-center gap-10"> */}
+        <div className="">
           <h2 className="text-[#1F204C] font-bold text-[30px]">Our Story</h2>
           <br />
           <p className="text-justify text-[#666666] text-[20px]">
@@ -24,8 +25,14 @@ export default function Profile() {
             as a living art form.
           </p>
         </div>
-        <div>
-            <Image src="/profile.png" width={705} height={609} alt={"profile"} />
+        <div className="h-full">
+          <Image
+            src="/profile.png"
+            width={705}
+            height={609}
+            alt={"profile"}
+            className="object-cover h-full"
+          />
         </div>
       </div>
     </>

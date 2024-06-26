@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Sign in",
 };
 
-const SignupPage = () => {
+const SigninPage = () => {
   return (
     <main className="flex min-h-screen flex-col  justify-center lg:p-24 p-10">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-evenly">
@@ -28,4 +28,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SigninPage;

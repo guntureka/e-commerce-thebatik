@@ -35,16 +35,17 @@ interface NavbarProps {
 
 export default function Navbar({ session }: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleCart = async () => {
-    console.log("cart");
+    router.push("/carts");
   };
   const handleWishlist = async () => {
-    console.log("wishlist");
+    router.push("/wishlists");
   };
 
   return (
-    <header className="sticky top-0 bg-white">
+    <header className="sticky top-0 bg-white z-[50]">
       <div className="flex justify-between items-center lg:px-24 px-10 py-5">
         <Link href={"/"}>
           <Image
@@ -167,6 +168,29 @@ export default function Navbar({ session }: NavbarProps) {
                         />
                       </Link>
                     </SheetClose>
+                    {session?.user.role != "USER" ? (
+                      <SheetClose asChild>
+                        <Link href={"/dashboard"} className="text-start">
+                          <Button
+                            variant={"ghost"}
+                            className="w-full flex justify-start"
+                          >
+                            Dashboard
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                    ) : (
+                      <SheetClose asChild>
+                        <Link href={"/profile"} className="text-start">
+                          <Button
+                            variant={"ghost"}
+                            className="w-full flex justify-start"
+                          >
+                            Profile
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                    )}
                     <div className="flex flex-col space-y-3 md:hidden">
                       <SheetClose asChild>
                         <Link href={"/"} className="text-start">
@@ -257,7 +281,7 @@ export default function Navbar({ session }: NavbarProps) {
                             <Link href={"/"} className="text-start">
                               <Button
                                 variant={"ghost"}
-                                className="w-full flex justify-start pl-0"
+                                className="w-full flex justify-start "
                               >
                                 Home
                               </Button>
