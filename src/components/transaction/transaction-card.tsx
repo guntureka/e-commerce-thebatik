@@ -40,7 +40,7 @@ export default function TransactionCard({
   return (
     <div className=" ">
       <div className="grid grid-cols-3 sm:grid-cols-5 items-center place-items-center border-2 rounded-lg py-4 ">
-        <div className="truncate">
+        <div className="w-full">
           <Image
             src={`https://utfs.io/f/${item.product.images[0]}`}
             alt={item.product.name}
@@ -48,7 +48,7 @@ export default function TransactionCard({
             height={1000}
             className="w-20 h-20 object-cover"
           />
-          <span className="text-sm truncate">{item.product.name}</span>
+          <p className="text-sm truncate">{item.product.name}</p>
         </div>
         <div className="sm:block hidden">
           <span className="text-gray-500 ml-2 ">{`$${item.product.price}`}</span>
