@@ -40,7 +40,7 @@ export default function TransactionCard({
   return (
     <div className=" ">
       <div className="grid grid-cols-3 sm:grid-cols-5 items-center place-items-center border-2 rounded-lg py-4 ">
-        <div>
+        <div className="truncate">
           <Image
             src={`https://utfs.io/f/${item.product.images[0]}`}
             alt={item.product.name}

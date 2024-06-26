@@ -2,8 +2,9 @@
 
 import { db } from "@/utils/db";
 import { snap } from "@/utils/midtrans";
-import { Prisma } from "@prisma/client";
+import { Prisma, TransactionStatus } from "@prisma/client";
 import { getTransactionById } from "./transaction";
+import { createHash } from "crypto";
 type Transaction = Prisma.TransactionGetPayload<{
   include: {
     transactionItems: true;
@@ -45,24 +46,44 @@ export const createSnapToken = async (transaction: Transaction) => {
   }
 };
 
-// const signatureKeyCompare = (
-//   signature_key: string,
-//   order_id: string,
-//   gross_amount: string,
-//   status_code: string
-// ) => {
-//   /*
-//     The logic to generate or calculate signature_key is explained below: SHA512(order_id+status_code+gross_amount+ServerKey)
-//     */
+const updateTransactionDb = async (
+  props: MidtransAfterPaymentProps,
+  status: TransactionStatus
+) => {
+  const transactionId = props.order_id;
+  try {
+    await db.transaction.update({
+      where: {
+        id: transactionId,
+      },
+      data: {
+        status: status,
+      },
+    });
+    // Buat update db setelah pembayaran berhasil
+  } catch (error) {
+    console.error("Error updating transaction:", error);
+  }
+};
 
-//   const userSignatureKey = `${order_id}${status_code}${gross_amount}${process.env.MIDTRANS_SERVER_KEY}`;
+const signatureKeyCompare = (
+  signature_key: string,
+  order_id: string,
+  gross_amount: string,
+  status_code: string
+) => {
+  /*
+    The logic to generate or calculate signature_key is explained below: SHA512(order_id+status_code+gross_amount+ServerKey)
+    */
 
-//   const hash = createHash("sha512").update(userSignatureKey).digest("hex");
-//   console.log(hash);
-//   console.log(signature_key);
+  const userSignatureKey = `${order_id}${status_code}${gross_amount}${process.env.NEXT_PUBLIC_MIDTRANS_SECRET_KEY}`;
 
-//   return signature_key === hash;
-// };
+  const hash = createHash("sha512").update(userSignatureKey).digest("hex");
+  console.log(hash);
+  console.log(signature_key);
+
+  return signature_key === hash;
+};
 
 export const handleAfterPayment = async (
   response: MidtransAfterPaymentProps
@@ -80,6 +101,34 @@ export const handleAfterPayment = async (
         error: "Transactoun not found",
       };
     }
+
+    const isSignatureFromMidtrans = signatureKeyCompare(
+      response.signature_key,
+      transaction?.id,
+      response.gross_amount,
+      response.status_code
+    );
+
+    if (isSignatureFromMidtrans) {
+      if (
+        transactionStatus === "capture" ||
+        transactionStatus === "settlement"
+      ) {
+        if (fraudStatus == "accept") {
+          data = await updateTransactionDb(response, TransactionStatus.SUCCESS);
+        } else return { status: 500, message: "Fraud detected!" };
+      } else if (
+        transactionStatus === "cancel" ||
+        transactionStatus === "deny" ||
+        transactionStatus === "expire"
+      ) {
+        data = await updateTransactionDb(response, TransactionStatus.DECLINE);
+      } else if (transactionStatus === "pending") {
+        data = await updateTransactionDb(response, TransactionStatus.PROCESS);
+      } else return { status: 500, message: "no status available" };
+    } else return { status: 500, message: "Signature key not match" };
+
+    return data;
   } catch (error) {
     console.log(error);
   }

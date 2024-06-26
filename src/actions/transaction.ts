@@ -181,11 +181,11 @@ export const createTransaction = async ({ carts }: CartProps) => {
       };
     }
 
-    // await Promise.all(
-    //   carts.map((v) => {
-    //     return deleteCartById(v.id);
-    //   })
-    // );
+    await Promise.all(
+      carts.map((v) => {
+        return deleteCartById(v.id);
+      })
+    );
 
     return {
       transactionId: transaction.id,

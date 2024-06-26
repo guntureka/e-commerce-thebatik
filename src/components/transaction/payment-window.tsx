@@ -1,10 +1,11 @@
 "use client";
 
-import { notFound, useSearchParams } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { snap } from "@/utils/midtrans"; // Assuming a snap function
 import { updateTransactionStatusById } from "@/actions/transaction";
 import { TransactionStatus } from "@prisma/client";
+import { useToast } from "../ui/use-toast";
 
 declare global {
   interface Window {
@@ -26,6 +27,8 @@ declare global {
 const PaymentWindow = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const router = useRouter();
+  const { toast } = useToast();
 
   console.log(token);
 
@@ -50,52 +53,45 @@ const PaymentWindow = () => {
           window.snap.embed(token, {
             embedId: "snap-container",
             onSuccess: function (result) {
+              toast({
+                title: "Success!",
+                description: "Transaction Success",
+                variant: "success",
+              });
+              router.push("/");
               console.log(result);
             },
             onPending: function (result) {
-              alert("waiting for your payment!");
-              console.log(result);
+              toast({
+                title: "Pending!",
+                description: "Transaction Pending",
+                variant: "destructive",
+              });
             },
             onError: function (result) {
-              alert("payment failed!");
-              console.log(result);
+              toast({
+                title: "Error!",
+                description: "Transaction Error",
+                variant: "destructive",
+              });
             },
             onClose: function () {
-              alert("you closed the popup without finishing the payment");
+              toast({
+                title: "Close!",
+                description: "Transaction close",
+                variant: "destructive",
+              });
             },
           });
         }
       };
-    } else {
-      // If the script already exists, directly call the snap embed function
-      if (window.snap) {
-        window.snap.embed(token, {
-          embedId: "snap-container",
-          onSuccess: function (result) {
-            alert("payment success!");
-            console.log(result);
-          },
-          onPending: function (result) {
-            alert("waiting for your payment!");
-            console.log(result);
-          },
-          onError: function (result) {
-            alert("payment failed!");
-            console.log(result);
-          },
-          onClose: function () {
-            alert("you closed the popup without finishing the payment");
-          },
-        });
-      }
     }
-
     return () => {
       if (existingScript) {
         existingScript.removeEventListener("load", () => {});
       }
     };
-  }, [clientKey, token]);
+  }, [clientKey, token, router, toast]);
 
   return <div id="snap-container"></div>;
 };

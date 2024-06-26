@@ -59,16 +59,26 @@ export const signupAuth = async (values: z.infer<typeof signupSchema>) => {
 
     const verificationToken = await generateVerificationToken(email);
 
+    console.log(verificationToken);
+
     if (!verificationToken) {
       return {
         error: "Token generated failed",
       };
     }
 
-    await sendEmail({
+    const send = await sendEmail({
       email,
       emailVerificationToken: verificationToken.token,
     });
+
+    console.log(send);
+
+    if (!send) {
+      return {
+        error: "Cannot send email",
+      };
+    }
 
     return {
       success: "User registered successful, please check your email!",
@@ -176,10 +186,12 @@ export const forgotPassword = async (
       };
     }
 
-    await sendPasswordEmail({
+    const send = await sendPasswordEmail({
       email,
       emailVerificationToken: verificationToken.token,
     });
+
+    console.log(send);
 
     return {
       success:

@@ -2,6 +2,7 @@
 
 import VerificationEmailTemplate from "@/components/email/verification-email";
 import VerificationPasswordTemplate from "@/components/email/verification-password-template";
+import { transporter } from "@/utils/mail";
 import { resend } from "@/utils/resend";
 
 interface SendEmailProps {
@@ -14,20 +15,30 @@ export const sendEmail = async ({
   emailVerificationToken,
 }: SendEmailProps) => {
   try {
-    const { data, error } = await resend.emails.send({
-      from: "The Batik E-Commerce <onboarding@resend.dev>",
-      to: [email],
-      subject: "Email Verification",
-      react: VerificationEmailTemplate({
-        emailVerificationToken: emailVerificationToken,
-      }),
+    // const { data, error } = await resend.emails.send({
+    //   from: "The Batik E-Commerce <onboarding@resend.dev>",
+    //   to: [email],
+    //   subject: "Email Verification",
+    //   react: VerificationEmailTemplate({
+    //     emailVerificationToken: emailVerificationToken,
+    //   }),
+    // });
+
+    // if (error) {
+    //   return error.message;
+    // }
+
+    // return data;
+    const resetLink = `${process.env.NEXT_PUBLIC_URL}/verify-email?token=${emailVerificationToken}`;
+
+    const res = await transporter.sendMail({
+      from: "guntureka1020@gmail.com",
+      to: email,
+      subject: "New Password",
+      html: `<p>Click <a href="${resetLink}">here</a> to verify your email.</p>`,
     });
 
-    if (error) {
-      return error.message;
-    }
-
-    return data;
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -38,20 +49,31 @@ export const sendPasswordEmail = async ({
   emailVerificationToken,
 }: SendEmailProps) => {
   try {
-    const { data, error } = await resend.emails.send({
-      from: "The Batik E-Commerce <onboarding@resend.dev>",
-      to: [email],
+    // const { data, error } = await resend.emails.send({
+    //   from: "The Batik E-Commerce <onboarding@resend.dev>",
+    //   to: [email],
+    //   subject: "New Password",
+    //   react: VerificationPasswordTemplate({
+    //     emailVerificationToken: emailVerificationToken,
+    //   }),
+    // });
+
+    // if (error) {
+    //   return error.message;
+    // }
+
+    // return data;
+
+    const resetLink = `${process.env.NEXT_PUBLIC_URL}/new-password?token=${emailVerificationToken}`;
+
+    const res = await transporter.sendMail({
+      from: "guntureka1020@gmail.com",
+      to: email,
       subject: "New Password",
-      react: VerificationPasswordTemplate({
-        emailVerificationToken: emailVerificationToken,
-      }),
+      html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
     });
 
-    if (error) {
-      return error.message;
-    }
-
-    return data;
+    return res;
   } catch (error) {
     console.log(error);
   }
